@@ -1,0 +1,4096 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org">
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+
+  <title>PBC Library Manual 0.5.12</title>
+  <link rel="stylesheet" href="default.css" type="text/css">
+  <meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+</head>
+
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084"
+alink="#0000FF">
+  <div lang="en" class="book" title="PBC Library Manual 0.5.12">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h1 class="title"><a name="id2554122" id=
+          "id2554122"></a>PBC Library Manual 0.5.12</h1>
+        </div>
+
+        <div>
+          <div class="author">
+            <h3 class="author"><span class="firstname">Ben</span>
+            <span class="surname">Lynn</span></h3>
+          </div>
+        </div>
+
+        <div>
+          <div class="revhistory">
+            <table border="1" width="100%" summary=
+            "Revision history">
+              <tr>
+                <th align="left" valign="top" colspan="3">
+                <b>Revision History</b></th>
+              </tr>
+
+              <tr>
+                <td align="left"></td>
+
+                <td align="left">2006</td>
+
+                <td align="left">BL</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+
+    <div class="toc">
+      <dl>
+        <dt><span class="preface"><a href=
+        "#_preface">Preface</a></span></dt>
+
+        <dt><span class="chapter"><a href="#_installing_pbc">1.
+        Installing PBC</a></span></dt>
+
+        <dd>
+          <dl>
+            <dt><span class="section"><a href=
+            "#_simple_makefile">Simple Makefile</a></span></dt>
+
+            <dt><span class="section"><a href="#pbcintro">Quick
+            start</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_basics">Basics</a></span></dt>
+          </dl>
+        </dd>
+
+        <dt><span class="chapter"><a href="#_tutorial">2.
+        Tutorial</a></span></dt>
+
+        <dd>
+          <dl>
+            <dt><span class="section"><a href=
+            "#_bls_signatures">BLS signatures</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_import_export">Import/export</a></span></dt>
+          </dl>
+        </dd>
+
+        <dt><span class="chapter"><a href="#_pairing_functions">3.
+        Pairing functions</a></span></dt>
+
+        <dd>
+          <dl>
+            <dt><span class="section"><a href=
+            "#_initializing_pairings">Initializing
+            pairings</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_applying_pairings">Applying pairings</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_other_pairing_functions">Other pairing
+            functions</a></span></dt>
+          </dl>
+        </dd>
+
+        <dt><span class="chapter"><a href="#_element_functions">4.
+        Element functions</a></span></dt>
+
+        <dd>
+          <dl>
+            <dt><span class="section"><a href=
+            "#_initializing_elements">Initializing
+            elements</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_assigning_elements">Assigning
+            elements</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_converting_elements">Converting
+            elements</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_element_arithmetic">Element
+            arithmetic</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_exponentiating_elements">Exponentiating
+            elements</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_comparing_elements">Comparing
+            elements</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_element_i_o">Element I/O</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_random_elements">Random elements</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_element_import_export">Element
+            import/export</a></span></dt>
+          </dl>
+        </dd>
+
+        <dt><span class="chapter"><a href="#paramchap">5. Param
+        functions</a></span></dt>
+
+        <dd>
+          <dl>
+            <dt><span class="section"><a href="#paramgenchap">Param
+            generation</a></span></dt>
+          </dl>
+        </dd>
+
+        <dt><span class="chapter"><a href="#_other_functions">6.
+        Other functions</a></span></dt>
+
+        <dd>
+          <dl>
+            <dt><span class="section"><a href="#randomref">Random
+            bits</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_custom_allocation">Custom allocation</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_logging">Logging</a></span></dt>
+          </dl>
+        </dd>
+
+        <dt><span class="chapter"><a href="#bundlechap">7. Bundled
+        programs</a></span></dt>
+
+        <dd>
+          <dl>
+            <dt><span class="section"><a href=
+            "#pbcref">Pairing-based calculator</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_parameter_generation">Parameter
+            generation</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_example_cryptosystems">Example
+            cryptosystems</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_benchmarks">Benchmarks</a></span></dt>
+          </dl>
+        </dd>
+
+        <dt><span class="chapter"><a href="#_pbc_internals">8. PBC
+        internals</a></span></dt>
+
+        <dd>
+          <dl>
+            <dt><span class="section"><a href=
+            "#_groups_rings_fields">Groups, rings,
+            fields</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_internal_randomness">Internal
+            randomness</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_type_a_internals">Type A internals</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_type_b_internals">Type B internals</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_type_c_internals">Type C internals</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_type_d_internals">Type D internals</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_type_e_internals">Type E Internals</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_type_f_internals">Type F internals</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_type_g_internals">Type G Internals</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_testing_functions">Testing functions</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_dynamic_arrays">Dynamic arrays</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_symbol_tables">Symbol tables</a></span></dt>
+
+            <dt><span class="section"><a href=
+            "#_religious_stances">Religious stances</a></span></dt>
+          </dl>
+        </dd>
+
+        <dt><span class="chapter"><a href="#_security_issues">9.
+        Security issues</a></span></dt>
+
+        <dt><span class="appendix"><a href="#_contributors">A.
+        Contributors</a></span></dt>
+      </dl>
+    </div>
+
+    <div class="preface" title="Preface">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h2 class="title"><a name="_preface"></a>Preface</h2>
+          </div>
+        </div>
+      </div>
+
+      <p>The PBC library is a free portable C library allowing the
+      rapid prototyping of pairing-based cryptosystems. It provides
+      an abstract interface to a cyclic group with a bilinear
+      pairing, insulating the programmer from mathematical details.
+      Knowledge of elliptic curves is optional.</p>
+
+      <p>The PBC library is built on top of the GMP library, and
+      the PBC API is strongly influenced by the GMP API.
+      Accordingly, this manual tries to imitate the look and feel
+      of the GMP manual.</p>
+
+      <p>The PBC library homepage: <a class="ulink" href=
+      "http://crypto.stanford.edu/pbc/" target=
+      "_top">http://crypto.stanford.edu/pbc/</a></p>
+
+      <p>The GMP library homepage: <a class="ulink" href=
+      "http://www.swox.com/gmp/" target=
+      "_top">http://www.swox.com/gmp/</a></p>
+    </div>
+
+    <div class="chapter" title=
+    "Chapter&nbsp;1.&nbsp;Installing PBC">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h2 class="title"><a name=
+            "_installing_pbc"></a>Chapter&nbsp;1.&nbsp;Installing
+            PBC</h2>
+          </div>
+        </div>
+      </div>
+
+      <p>The PBC library needs <a class="ulink" href=
+      "http://www.swox.com/gmp/" target="_top">the GMP
+      library</a>.</p>
+
+      <p>This build system has been tested and works on Linux and
+      Mac OS X with a fink installation.</p>
+      <pre class="literallayout">
+$ ./configure
+$ make
+$ make install
+</pre>
+
+      <p>On Windows, the configure command requires a couple of
+      options:</p>
+      <pre class="literallayout">
+$ ./configure -disable-static -enable-shared
+</pre>
+
+      <p>By default the library is installed in <code class=
+      "literal">/usr/local/lib</code>. On some systems, this may
+      not be in the library path. One way to fix this is to edit
+      <code class="literal">/etc/ld.so.conf</code> and run
+      <code class="literal">ldconfig</code>.</p>
+
+      <div class="section" title="Simple Makefile">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_simple_makefile"></a>Simple Makefile</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>For speed and simplicity, I use <code class=
+        "literal">simple.make</code> during development. Naturally
+        it is less portable.</p>
+        <pre class="literallayout">
+$ make -f simple.make
+</pre>
+
+        <p>PBC uses some GNU C extensions such as nested
+        functions.</p>
+      </div>
+
+      <div class="section" title="Quick start">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "pbcintro" id="pbcintro"></a>Quick start</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>We shall use the following notation. For our purposes,
+        the pairing is a bilinear map from two cyclic groups, G1
+        and G2 to a third group GT, where each group has prime
+        order r.</p>
+
+        <p>Run <code class="literal">pbc/pbc</code> and type:</p>
+        <pre class="literallayout">
+g := rnd(G1);
+g;
+</pre>
+
+        <p>The first line generates a random element g of the group
+        G1, while the second prints out the value of g. (The syntax
+        was influenced by <code class="literal">bc</code>, an
+        arbitrary precision calculator.) Next, enter:</p>
+        <pre class="literallayout">
+h := rnd(G2);
+h;
+</pre>
+
+        <p>This assigns h to a random element of the group G2.
+        Actually, the default pairing <code class=
+        "literal">pbc</code> uses is symmetric so G1 and G2 are in
+        fact the same group, but in general they are distinct. To
+        compute the pairing applied to g and h, type:</p>
+        <pre class="literallayout">
+pairing(g,h);
+</pre>
+
+        <p>The order of both g and h is r. Let’s generate two
+        random numbers between 1 and r:</p>
+        <pre class="literallayout">
+a := rnd(Zr);
+b := rnd(Zr);
+</pre>
+
+        <p>By bilinearity, the resulting output of both of these
+        lines should be identical:</p>
+        <pre class="literallayout">
+pairing(g^a,h^b);
+pairing(g,h)^(a*b);
+</pre>
+
+        <p>This program has <a class="link" href="#pbcref" title=
+        "Pairing-based calculator">other features</a> but the
+        commands shown here should be enough to quickly and
+        interactively experiment with many pairing-based
+        cryptosystems using real numbers.</p>
+      </div>
+
+      <div class="section" title="Basics">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_basics"></a>Basics</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>Programs using the PBC library should include the file
+        <code class="literal">pbc.h</code>:</p>
+        <pre class="literallayout">
+#include &lt;pbc.h&gt;
+</pre>
+
+        <p>and linked against the PBC library and the GMP library,
+        e.g.</p>
+        <pre class="literallayout">
+$ gcc program.c -L. -lpbc -lgmp
+</pre>
+
+        <p>The file <code class="literal">pbc.h</code> already
+        includes <code class="literal">gmp.h</code>.</p>
+
+        <p>PBC follows GMP in several respects:</p>
+
+        <div class="itemizedlist">
+          <ul class="itemizedlist" type="disc">
+            <li class="listitem">Output arguments generally precede
+            input arguments.</li>
+
+            <li class="listitem">The same variable can be used as
+            input and output in one call.</li>
+
+            <li class="listitem">Before a variable may be used it
+            must be initialized exactly once. When no longer needed
+            it must be cleared. For efficiency, unnecessary
+            initializating and clearing should be avoided.</li>
+
+            <li class="listitem">PBC variables ending with
+            <code class="literal">_t</code> behave the same as GMP
+            variables in function calls: effectively as call-by
+            references. In other words, as in GMP, if a function
+            that modifies an input variable, that variable remains
+            modified when control return is returned to the
+            caller.</li>
+
+            <li class="listitem">Like GMP, variables automatically
+            allocate memory when needed. By default, <code class=
+            "literal">malloc()</code> and friends are called but
+            this can be changed.</li>
+
+            <li class="listitem">PBC functions are mostly
+            reentrant.</li>
+          </ul>
+        </div>
+
+        <p>Since the PBC library is built on top of GMP, the GMP
+        types are available. PBC types are similar to GMP types.
+        The following example is paraphrased from an example in the
+        GMP manual, and shows how to declare the PBC data type
+        <code class="literal">element_t</code>.</p>
+        <pre class="literallayout">
+element_t sum;
+struct foo { element_t x, y; };
+element_t vec[20];
+</pre>
+
+        <p>GMP has the <code class="literal">mpz_t</code> type for
+        integers, <code class="literal">mpq_t</code> for rationals
+        and so on. In contrast, PBC uses the <code class=
+        "literal">element_t</code> data type for elements of
+        different algebraic structures, such as elliptic curve
+        groups, polynomial rings and finite fields. Functions
+        assume their inputs come from appropriate algebraic
+        structures.</p>
+
+        <p>PBC data types and functions can be categorized as
+        follows. The first two alone suffice for a range of
+        applications.</p>
+
+        <div class="itemizedlist">
+          <ul class="itemizedlist" type="disc">
+            <li class="listitem"><code class=
+            "literal">element_t</code>: elements of an algebraic
+            structure.</li>
+
+            <li class="listitem"><code class=
+            "literal">pairing_t</code>: pairings where elements
+            belong; can initialize from sample pairing parameters
+            bundled with PBC in the <code class=
+            "literal">param</code> subdirectory.</li>
+
+            <li class="listitem"><code class=
+            "literal">pbc_param_t</code>: used to generate pairing
+            parameters.</li>
+
+            <li class="listitem"><code class=
+            "literal">pbc_cm_t</code>: parameters for constructing
+            curves via the CM method; sometimes required by
+            <code class="literal">pbc_param_t</code>.</li>
+
+            <li class="listitem"><code class=
+            "literal">field_t</code>: algebraic structures: groups,
+            rings and fields; used internally by <code class=
+            "literal">pairing_t</code>.</li>
+
+            <li class="listitem">a few miscellaneous functions,
+            such as ones controlling how random bits are
+            generated.</li>
+          </ul>
+        </div>
+
+        <p>Functions operating on a given data type usually have
+        the same prefix, e.g. those involving <code class=
+        "literal">element_t</code> objects begin with <code class=
+        "literal">element_</code>.</p>
+      </div>
+    </div>
+
+    <div class="chapter" title="Chapter&nbsp;2.&nbsp;Tutorial">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h2 class="title"><a name=
+            "_tutorial"></a>Chapter&nbsp;2.&nbsp;Tutorial</h2>
+          </div>
+        </div>
+      </div>
+
+      <p>This chapter walks through how one might implement the
+      Boneh-Lynn-Shacham (BLS) signature scheme using the PBC
+      library. It is based on the file <code class=
+      "literal">example/bls.c</code>.</p>
+
+      <p>We have three groups <span class=
+      "emphasis"><em>G1</em></span>, <span class=
+      "emphasis"><em>G2</em></span>, <span class=
+      "emphasis"><em>GT</em></span> of prime order <span class=
+      "emphasis"><em>r</em></span>, and a bilinear map <span class=
+      "emphasis"><em>e</em></span> that takes an element from
+      <span class="emphasis"><em>G1</em></span> and an element from
+      <span class="emphasis"><em>G2</em></span>, and outputs an
+      element of <span class="emphasis"><em>GT</em></span>. We
+      publish these along with the system parameter <span class=
+      "emphasis"><em>g</em></span>, which is a randomly chosen
+      element of <span class="emphasis"><em>G2</em></span>.</p>
+
+      <p>Alice wishes to sign a message. She generates her public
+      and private keys as follows. Her private key is a random
+      element <span class="emphasis"><em>x</em></span> of
+      <span class="emphasis"><em>Zr</em></span>, and her
+      corresponding public key is <span class=
+      "emphasis"><em>g</em></span><sup><span class=
+      "emphasis"><em>x</em></span></sup>.</p>
+
+      <p>To sign a message, Alice hashes the message to some
+      element <span class="emphasis"><em>h</em></span> of
+      <span class="emphasis"><em>G1</em></span>, and then outputs
+      the signature <span class=
+      "emphasis"><em>h</em></span><sup><span class=
+      "emphasis"><em>x</em></span></sup>.</p>
+
+      <p>To verify a signature σ, Bob checks that <span class=
+      "emphasis"><em>e</em></span>(<span class=
+      "emphasis"><em>h</em></span>,<span class=
+      "emphasis"><em>g</em></span><sup><span class=
+      "emphasis"><em>x</em></span></sup>) = <span class=
+      "emphasis"><em>e</em></span>(σ, <span class=
+      "emphasis"><em>g</em></span>).</p>
+
+      <p>We now translate the above to C code using the PBC
+      library.</p>
+
+      <div class="section" title="BLS signatures">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_bls_signatures"></a>BLS signatures</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>First we include <code class=
+        "literal">pbc/pbc.h</code>:</p>
+        <pre class="literallayout">
+#include &lt;pbc.h&gt;
+</pre>
+
+        <p>Next we initialize a pairing:</p>
+        <pre class="literallayout">
+pairing_t pairing;
+char param[1024];
+size_t count = fread(param, 1, 1024, stdin);
+if (!count) pbc_die("input error");
+pairing_init_set_buf(pairing, param, count);
+</pre>
+
+        <p>Later we give pairing parameters to our program on
+        standard input. Any file in the <code class=
+        "literal">param</code> subdirectory will suffice, for
+        example:</p>
+        <pre class="literallayout">
+$ bls &lt; param/a.param
+</pre>
+
+        <p>We shall need several <code class=
+        "literal">element_t</code> variables to hold the system
+        parameters, keys and other quantities. We declare them and
+        initialize them,</p>
+        <pre class="literallayout">
+element_t g, h;
+element_t public_key, secret_key;
+element_t sig;
+element_t temp1, temp2;
+
+element_init_G2(g, pairing);
+element_init_G2(public_key, pairing);
+element_init_G1(h, pairing);
+element_init_G1(sig, pairing);
+element_init_GT(temp1, pairing);
+element_init_GT(temp2, pairing);
+element_init_Zr(secret_key, pairing);
+</pre>
+
+        <p>generate system parameters,</p>
+        <pre class="literallayout">
+element_random(g);
+</pre>
+
+        <p>generate a private key,</p>
+        <pre class="literallayout">
+element_random(secret_key);
+</pre>
+
+        <p>and the corresponding public key.</p>
+        <pre class="literallayout">
+element_pow_zn(public_key, g, secret_key);
+</pre>
+
+        <p>When given a message to sign, we first compute its hash,
+        using some standard hash algorithm. Many libraries can do
+        this, and this operation does not involve pairings, so PBC
+        does not provide functions for this step. For this example,
+        and our message has already been hashed, possibly using
+        another library.</p>
+
+        <p>Say the message hash is "ABCDEF" (a 48-bit hash). We map
+        these bytes to an element h of G1,</p>
+        <pre class="literallayout">
+element_from_hash(h, "ABCDEF", 6);
+</pre>
+
+        <p>then sign it:</p>
+        <pre class="literallayout">
+element_pow_zn(sig, h, secret_key);
+</pre>
+
+        <p>To verify this signature, we compare the outputs of the
+        pairing applied to the signature and system parameter, and
+        the pairing applied to the message hash and public key. If
+        the pairing outputs match then the signature is valid.</p>
+        <pre class="literallayout">
+pairing_apply(temp1, sig, g, pairing);
+pairing_apply(temp2, h, public_key, pairing);
+if (!element_cmp(temp1, temp2)) {
+    printf("signature verifies\n");
+} else {
+    printf("signature does not verify\n");
+}
+</pre>
+      </div>
+
+      <div class="section" title="Import/export">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_import_export"></a>Import/export</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>To be useful, at some stage the signature must be
+        converted to bytes for storage or transmission:</p>
+        <pre class="literallayout">
+int n = pairing_length_in_bytes_compressed_G1(pairing);
+// Alternatively:
+// int n = element_length_in_bytes_compressed(sig);
+unsigned char *data = malloc(n);
+element_to_bytes_compressed(data, sig);
+</pre>
+
+        <p>On the other end, the signature must be
+        decompressed:</p>
+        <pre class="literallayout">
+element_from_bytes_compressed(sig, data);
+</pre>
+
+        <p>Eliding <code class="literal">_compressed</code> in the
+        above code will also work but the buffer <span class=
+        "emphasis"><em>data</em></span> will be roughly twice as
+        large.</p>
+
+        <p>We can save more space by using the <span class=
+        "emphasis"><em>x</em></span>-coordinate of the signature
+        only</p>
+        <pre class="literallayout">
+int n = pairing_length_in_bytes_x_only_G1(pairing);
+// Alternative:
+//   int n = element_length_in_bytes_x_only(sig);
+unsigned char *data = malloc(n);
+element_to_bytes_compressed(data, sig);
+</pre>
+
+        <p>but then there is a complication during verification
+        since two different points have the same <span class=
+        "emphasis"><em>x</em></span>-coordinate. One way to solve
+        this problem is to guess one point and try to verify. If
+        that fails, we try the other. It can be shown that the
+        pairing outputs of the two points are inverses of each
+        other, avoiding the need to compute a pairing the second
+        time. (In fact, there are even better ways to handle
+        this.)</p>
+        <pre class="literallayout">
+int n = pairing_length_in_bytes_x_only_G1(pairing);
+//int n = element_length_in_bytes_x_only(sig);
+unsigned char *data = malloc(n);
+
+element_to_bytes_x_only(data, sig);
+
+element_from_bytes_x_only(sig, data)
+
+pairing_apply(temp1, sig, g, pairing);
+pairing_apply(temp2, h, public_key, pairing);
+
+if (!element_cmp(temp1, temp2)) {
+    printf("signature verifies on first guess\n");
+} else {
+    element_invert(temp1, temp1);
+    if (!element_cmp(temp1, temp2)) {
+        printf("signature verifies on second guess\n");
+    } else {
+        printf("signature does not verify\n");
+    }
+}
+</pre>
+      </div>
+    </div>
+
+    <div class="chapter" title=
+    "Chapter&nbsp;3.&nbsp;Pairing functions">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h2 class="title"><a name=
+            "_pairing_functions"></a>Chapter&nbsp;3.&nbsp;Pairing
+            functions</h2>
+          </div>
+        </div>
+      </div>
+
+      <p>An application should first initialize a pairing object.
+      This causes PBC to setup curves, groups and other
+      mathematical miscellany. After that, elements can be
+      initialized and manipulated for cryptographic operations.</p>
+
+      <p>Parameters for various pairings are included with the PBC
+      library distribution in the <code class=
+      "literal">param</code> subdirectory, and some are suitable
+      for cryptographic use. Some programs in the <code class=
+      "literal">gen</code> subdirectory may be used to generate
+      parameters (see <a class="xref" href="#bundlechap" title=
+      "Chapter&nbsp;7.&nbsp;Bundled programs">Chapter&nbsp;7,
+      <i>Bundled programs</i></a>). Also, see the PBC website for
+      many more pairing parameters.</p>
+
+      <p>Pairings involve three groups of prime order. The PBC
+      library calls them G1, G2, and GT, and calls the order r. The
+      pairing is a bilinear map that takes two elements as input,
+      one from G1 and one from G2, and outputs an element of
+      GT.</p>
+
+      <p>The elements of G2 are at least as long as G1; G1 is
+      guaranteed to be the shorter of the two. Sometimes G1 and G2
+      are the same group (i.e. the pairing is symmetric) so their
+      elements can be mixed freely. In this case the <code class=
+      "literal">pairing_is_symmetric</code> function returns 1.</p>
+
+      <p>Bilinear pairings are stored in the data type <code class=
+      "literal">pairing_t</code>. Functions that operate on them
+      start with <code class="literal">pairing_</code>.</p>
+
+      <div class="section" title="Initializing pairings">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_initializing_pairings"></a>Initializing
+              pairings</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>To initialize a pairing from an ASCIIZ string:</p>
+        <pre class="literallayout">
+pairing_t pairing;
+pairing_init_set_str(pairing, s);  // Where s is a char *.
+</pre>
+
+        <p>The string <span class="emphasis"><em>s</em></span>
+        holds <span class="emphasis"><em>pairing
+        parameters</em></span> in a text format. The <code class=
+        "literal">param</code> subdirectory contains several
+        examples.</p>
+
+        <p>Alternatively, call:</p>
+        <pre class="literallayout">
+pairing_t pairing;
+pairing_init_pbc_param(pairing, param);
+</pre>
+
+        <p>where <span class="emphasis"><em>param</em></span> is an
+        initialized <code class="literal">pbc_param_t</code> (see
+        <a class="xref" href="#paramchap" title=
+        "Chapter&nbsp;5.&nbsp;Param functions">Chapter&nbsp;5,
+        <i>Param functions</i></a>).</p>
+
+        <p>int <span class=
+        "strong"><strong>pairing_init_set_str</strong></span>(<span class="emphasis"><em>pairing_t
+        pairing</em></span>, <span class="emphasis"><em>const char
+        *s</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Initialize pairing from parameters in a ASCIIZ
+            string <span class="emphasis"><em>str</em></span>
+            Returns 0 on success, 1 on failure.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>pairing_init_set_buf</strong></span>(<span class="emphasis"><em>pairing_t
+        pairing</em></span>, <span class="emphasis"><em>const char
+        *s</em></span>, <span class="emphasis"><em>size_t
+        len</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Same, but read at most <span class=
+            "emphasis"><em>len</em></span> bytes. If <span class=
+            "emphasis"><em>len</em></span> is 0, it behaves as the
+            previous function. Returns 0 on success, 1 on
+            failure.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pairing_init_pbc_param</strong></span>(<span class="emphasis"><em>struct
+        pairing_s *pairing</em></span>, <span class=
+        "emphasis"><em>pbc_param_t p</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Initialize a pairing with pairing parameters
+            <span class="emphasis"><em>p</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pairing_clear</strong></span>(<span class=
+        "emphasis"><em>pairing_t pairing</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Free the space occupied by <span class=
+            "emphasis"><em>pairing</em></span>. Call whenever a
+            <code class="literal">pairing_t</code> variable is no
+            longer needed. Only call this after all elements
+            associated with <span class=
+            "emphasis"><em>pairing</em></span> have been cleared,
+            as they need information stored in the <span class=
+            "emphasis"><em>pairing</em></span> structure.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section" title="Applying pairings">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_applying_pairings"></a>Applying pairings</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>The function <code class="literal">pairing_apply</code>
+        can be called to apply a bilinear map. The order of the
+        inputs is important. The first, which holds the output,
+        must be from the group GT. The second must be from G1, the
+        third from G2, and the fourth must be the <code class=
+        "literal">pairing_t</code> variable that relates them.</p>
+
+        <p>In some applications, the programmer may know that many
+        pairings with the same G1 input will be computed. If so,
+        preprocessing should be used to avoid repeating many
+        calculations saving time in the long run. A variable of
+        type <code class="literal">pairing_pp_t</code> should be
+        declared, initialized with the fixed G1 element, and then
+        used to compute pairings:</p>
+        <pre class="literallayout">
+pairing_pp_t pp;
+pairing_pp_init(pp, x, pairing); // x is some element of G1
+pairing_pp_apply(r1, y1, pp); // r1 = e(x, y1)
+pairing_pp_apply(r2, y2, pp); // r2 = e(x, y2)
+pairing_pp_clear(pp); // don't need pp anymore
+</pre>
+
+        <p>Never mix and match G1, G2, and GT groups from different
+        pairings.</p>
+
+        <p>void <span class=
+        "strong"><strong>pairing_pp_init</strong></span>(<span class="emphasis"><em>pairing_pp_t
+        p</em></span>, <span class="emphasis"><em>element_t
+        in1</em></span>, <span class="emphasis"><em>pairing_t
+        pairing</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Get ready to perform a pairing whose first input is
+            <span class="emphasis"><em>in1</em></span>, and store
+            the results of time-saving precomputation in
+            <span class="emphasis"><em>p</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pairing_pp_clear</strong></span>(<span class="emphasis"><em>pairing_pp_t
+        p</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Clear <span class="emphasis"><em>p</em></span>. This
+            should be called after <span class=
+            "emphasis"><em>p</em></span> is no longer needed.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pairing_pp_apply</strong></span>(<span class="emphasis"><em>element_t
+        out</em></span>, <span class="emphasis"><em>element_t
+        in2</em></span>, <span class="emphasis"><em>pairing_pp_t
+        p</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Compute a pairing using <span class=
+            "emphasis"><em>in2</em></span> and the preprocessed
+            information stored in <span class=
+            "emphasis"><em>p</em></span> and store the output in
+            <span class="emphasis"><em>out</em></span>. The inputs
+            to the pairing are the element previously used to
+            initialize <span class="emphasis"><em>p</em></span> and
+            the element <span class=
+            "emphasis"><em>in2</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_pairing</strong></span>(<span class="emphasis"><em>element_t
+        out</em></span>, <span class="emphasis"><em>element_t
+        in1</em></span>, <span class="emphasis"><em>element_t
+        in2</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Computes a pairing: <span class=
+            "emphasis"><em>out</em></span> = <span class=
+            "emphasis"><em>e</em></span>(<span class=
+            "emphasis"><em>in1</em></span>, <span class=
+            "emphasis"><em>in2</em></span>), where <span class=
+            "emphasis"><em>in1</em></span>, <span class=
+            "emphasis"><em>in2</em></span>, <span class=
+            "emphasis"><em>out</em></span> must be in the groups
+            G1, G2, GT.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_prod_pairing</strong></span>(<span class="emphasis"><em>element_t
+        out</em></span>, <span class="emphasis"><em>element_t
+        in1[]</em></span>, <span class="emphasis"><em>element_t
+        in2[]</em></span>, <span class="emphasis"><em>int
+        n</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Computes the product of pairings, that is
+            <span class="emphasis"><em>out</em></span> =
+            <span class="emphasis"><em>e</em></span>(<span class=
+            "emphasis"><em>in1</em></span>[0], <span class=
+            "emphasis"><em>in2</em></span>[0]) … <span class=
+            "emphasis"><em>e</em></span>(<span class=
+            "emphasis"><em>in1</em></span>[n-1], <span class=
+            "emphasis"><em>in2</em></span>[n-1]). The arrays
+            <span class="emphasis"><em>in1</em></span>,
+            <span class="emphasis"><em>in2</em></span> must have at
+            least <span class="emphasis"><em>n</em></span> elements
+            belonging to the groups G1, G2 respectively, and
+            <span class="emphasis"><em>out</em></span> must belong
+            to the group GT.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section" title="Other pairing functions">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_other_pairing_functions"></a>Other pairing
+              functions</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>pairing_is_symmetric</strong></span>(<span class="emphasis"><em>pairing_t
+        pairing</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns true if G1 and G2 are the same group.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>pairing_length_in_bytes_G1</strong></span>(<span class="emphasis"><em>pairing_t
+        pairing</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns the length in bytes needed to represent an
+            element of G1.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>pairing_length_in_bytes_x_only_G1</strong></span>(<span class="emphasis"><em>pairing_t
+        pairing</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns the length in bytes needed to represent the
+            x-coordinate of an element of G1.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>pairing_length_in_bytes_compressed_G1</strong></span>(<span class="emphasis"><em>pairing_t
+        pairing</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns the length in bytes needed to represent a
+            compressed form of an element of G1. There is some
+            overhead in decompressing.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>pairing_length_in_bytes_G2</strong></span>(<span class="emphasis"><em>pairing_t
+        pairing</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns the length in bytes needed to represent an
+            element of G2.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>pairing_length_in_bytes_compressed_G2</strong></span>(<span class="emphasis"><em>pairing_t
+        pairing</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns the length in bytes needed to represent a
+            compressed form of an element of G2. There is some
+            overhead in decompressing.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>pairing_length_in_bytes_x_only_G2</strong></span>(<span class="emphasis"><em>pairing_t
+        pairing</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns the length in bytes needed to represent the
+            x-coordinate of an element of G2.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>pairing_length_in_bytes_GT</strong></span>(<span class="emphasis"><em>pairing_t
+        pairing</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns the length in bytes needed to represent an
+            element of GT.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>pairing_length_in_bytes_Zr</strong></span>(<span class="emphasis"><em>pairing_t
+        pairing</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns the length in bytes needed to represent an
+            element of Zr.</p>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter" title=
+    "Chapter&nbsp;4.&nbsp;Element functions">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h2 class="title"><a name=
+            "_element_functions"></a>Chapter&nbsp;4.&nbsp;Element
+            functions</h2>
+          </div>
+        </div>
+      </div>
+
+      <p>Elements of groups, rings and fields are stored in the
+      <code class="literal">element_t</code> data type. Variables
+      of this type must be initialized before use, and should be
+      cleared after they are no longer needed.</p>
+
+      <p>The <code class="literal">element_</code> functions must
+      be used with caution. Just as division by zero does not make
+      sense for integers, some operations may not make sense for
+      particular elements. For example, in a ring, one cannot in
+      general invert elements.</p>
+
+      <p>Another caveat is that many of these functions assume
+      their arguments come from the same ring, group or field. No
+      implicit type casting is performed.</p>
+
+      <p>For debug builds, turn on run-time checks by defining
+      <code class="literal">PBC_DEBUG</code> before including
+      <code class="literal">pbc.h</code>:</p>
+      <pre class="literallayout">
+#define PBC_DEBUG
+#include &lt;pbc.h&gt;
+</pre>
+
+      <p>Also, when <code class="literal">PBC_DEBUG</code> is
+      defined, the following macros are active. Normally they are
+      replaced with empty statements.</p>
+
+      <p><span class="strong"><strong>PBC_ASSERT(expr,
+      msg)</strong></span></p>
+
+      <div class="blockquote">
+        <blockquote class="blockquote">
+          <p>Macro: if <code class="literal">expr</code> evaluates
+          to 0, print <code class="literal">msg</code> and
+          exit.</p>
+        </blockquote>
+      </div>
+
+      <p><span class="strong"><strong>PBC_ASSERT_MATCH2(a,
+      b)</strong></span></p>
+
+      <div class="blockquote">
+        <blockquote class="blockquote">
+          <p>Macro: if elements <code class="literal">a</code> and
+          <code class="literal">b</code> are from different fields
+          then exit.</p>
+        </blockquote>
+      </div>
+
+      <p><span class="strong"><strong>PBC_ASSERT_MATCH3(a, b,
+      c)</strong></span></p>
+
+      <div class="blockquote">
+        <blockquote class="blockquote">
+          <p>Macro: if elements <code class="literal">a</code>,
+          <code class="literal">b</code> and <code class=
+          "literal">c</code> are from different fields then
+          exit.</p>
+        </blockquote>
+      </div>
+
+      <div class="section" title="Initializing elements">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_initializing_elements"></a>Initializing
+              elements</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>When an element is initialized it is associated with an
+        algebraic structure, such as a particular finite field or
+        elliptic curve group.</p>
+
+        <p>We use G1 and G2 to denote the input groups to the
+        pairing, and GT for the output group. All have order r, and
+        Zr means the ring of integers modulo r. G1 is the smaller
+        group (the group of points over the base field). With
+        symmetric pairings, G1 = G2.</p>
+
+        <p>void <span class=
+        "strong"><strong>element_init_G1</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>, <span class="emphasis"><em>pairing_t
+        pairing</em></span>)</p>
+
+        <p>void <span class=
+        "strong"><strong>element_init_G2</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>, <span class="emphasis"><em>pairing_t
+        pairing</em></span>)</p>
+
+        <p>void <span class=
+        "strong"><strong>element_init_GT</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>, <span class="emphasis"><em>pairing_t
+        pairing</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Initialize <span class="emphasis"><em>e</em></span>
+            to be an element of the group G1, G2 or GT of
+            <span class="emphasis"><em>pairing</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_init_Zr</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>, <span class="emphasis"><em>pairing_t
+        pairing</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Initialize <span class="emphasis"><em>e</em></span>
+            to be an element of the ring Z_r of <span class=
+            "emphasis"><em>pairing</em></span>. r is the order of
+            the groups G1, G2 and GT that are involved in the
+            pairing.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_init_same_as</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>, <span class="emphasis"><em>element_t
+        e2</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Initialize <span class="emphasis"><em>e</em></span>
+            to be an element of the algebraic structure that
+            <span class="emphasis"><em>e2</em></span> lies in.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_clear</strong></span>(<span class=
+        "emphasis"><em>element_t e</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Free the space occupied by <span class=
+            "emphasis"><em>e</em></span>. Call this when the
+            variable <span class="emphasis"><em>e</em></span> is no
+            longer needed.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section" title="Assigning elements">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_assigning_elements"></a>Assigning elements</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>These functions assign values to elements. When integers
+        are assigned, they are mapped to algebraic structures
+        canonically if it makes sense (e.g. rings and fields).</p>
+
+        <p>void <span class=
+        "strong"><strong>element_set0</strong></span>(<span class=
+        "emphasis"><em>element_t e</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>e</em></span> to
+            zero.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_set1</strong></span>(<span class=
+        "emphasis"><em>element_t e</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>e</em></span> to
+            one.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_set_si</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>, <span class="emphasis"><em>signed long int
+        i</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>e</em></span> to
+            <span class="emphasis"><em>i</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_set_mpz</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>, <span class="emphasis"><em>mpz_t
+        z</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>e</em></span> to
+            <span class="emphasis"><em>z</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_set</strong></span>(<span class=
+        "emphasis"><em>element_t e</em></span>, <span class=
+        "emphasis"><em>element_t a</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>e</em></span> to
+            <span class="emphasis"><em>a</em></span>.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section" title="Converting elements">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_converting_elements"></a>Converting elements</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_to_mpz</strong></span>(<span class="emphasis"><em>mpz_t
+        z</em></span>, <span class="emphasis"><em>element_t
+        e</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Converts <span class="emphasis"><em>e</em></span> to
+            a GMP integer <span class="emphasis"><em>z</em></span>
+            if such an operation makes sense</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_from_hash</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>, <span class="emphasis"><em>void
+        *data</em></span>, <span class="emphasis"><em>int
+        len</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Generate an element <span class=
+            "emphasis"><em>e</em></span> deterministically from the
+            <span class="emphasis"><em>len</em></span> bytes stored
+            in the buffer <span class=
+            "emphasis"><em>data</em></span>.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section" title="Element arithmetic">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_element_arithmetic"></a>Element arithmetic</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>Unless otherwise stated, all <code class=
+        "literal">element_t</code> arguments to these functions
+        must have been initialized to be from the same algebraic
+        structure. When one of these functions expects its
+        arguments to be from particular algebraic structures, this
+        is reflected in the name of the function.</p>
+
+        <p>The addition and multiplication functions perform
+        addition and multiplication operations in rings and fields.
+        For groups of points on an ellitpic curve, such as the G1
+        and G2 groups associated with pairings, both addition and
+        multiplication represent the group operation (and similarly
+        both 0 and 1 represent the identity element). It is
+        recommended that programs choose and one convention and
+        stick with it to avoid confusion.</p>
+
+        <p>In contrast, the GT group is currently implemented as a
+        subgroup of a finite field, so only multiplicative
+        operations should be used for GT.</p>
+
+        <p>void <span class=
+        "strong"><strong>element_add</strong></span>(<span class=
+        "emphasis"><em>element_t n</em></span>, <span class=
+        "emphasis"><em>element_t a</em></span>, <span class=
+        "emphasis"><em>element_t b</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>n</em></span> to
+            <span class="emphasis"><em>a</em></span> + <span class=
+            "emphasis"><em>b</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_sub</strong></span>(<span class=
+        "emphasis"><em>element_t n</em></span>, <span class=
+        "emphasis"><em>element_t a</em></span>, <span class=
+        "emphasis"><em>element_t b</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>n</em></span> to
+            <span class="emphasis"><em>a</em></span> - <span class=
+            "emphasis"><em>b</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_mul</strong></span>(<span class=
+        "emphasis"><em>element_t n</em></span>, <span class=
+        "emphasis"><em>element_t a</em></span>, <span class=
+        "emphasis"><em>element_t b</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>n</em></span> =
+            <span class="emphasis"><em>a</em></span> <span class=
+            "emphasis"><em>b</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_mul_mpz</strong></span>(<span class="emphasis"><em>element_t
+        n</em></span>, <span class="emphasis"><em>element_t
+        a</em></span>, <span class="emphasis"><em>mpz_t
+        z</em></span>)</p>
+
+        <p>void <span class=
+        "strong"><strong>element_mul_si</strong></span>(<span class="emphasis"><em>element_t
+        n</em></span>, <span class="emphasis"><em>element_t
+        a</em></span>, <span class="emphasis"><em>signed long int
+        z</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>n</em></span> =
+            <span class="emphasis"><em>a</em></span> <span class=
+            "emphasis"><em>z</em></span>, that is <span class=
+            "emphasis"><em>a</em></span> + <span class=
+            "emphasis"><em>a</em></span> + … + <span class=
+            "emphasis"><em>a</em></span> where there are
+            <span class="emphasis"><em>z</em></span> <span class=
+            "emphasis"><em>a</em></span>'s.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_mul_zn</strong></span>(<span class="emphasis"><em>element_t
+        c</em></span>, <span class="emphasis"><em>element_t
+        a</em></span>, <span class="emphasis"><em>element_t
+        z</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p><span class="emphasis"><em>z</em></span> must be an
+            element of a integer mod ring (i.e. <span class=
+            "strong"><strong>Z</strong></span><sub>n</sub> for some
+            n). Set <span class="emphasis"><em>c</em></span> =
+            <span class="emphasis"><em>a</em></span> <span class=
+            "emphasis"><em>z</em></span>, that is <span class=
+            "emphasis"><em>a</em></span> + <span class=
+            "emphasis"><em>a</em></span> + … + <span class=
+            "emphasis"><em>a</em></span> where there are
+            <span class="emphasis"><em>z</em></span> <span class=
+            "emphasis"><em>a</em></span>'s.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_div</strong></span>(<span class=
+        "emphasis"><em>element_t n</em></span>, <span class=
+        "emphasis"><em>element_t a</em></span>, <span class=
+        "emphasis"><em>element_t b</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>n</em></span> =
+            <span class="emphasis"><em>a</em></span> / <span class=
+            "emphasis"><em>b</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_double</strong></span>(<span class="emphasis"><em>element_t
+        n</em></span>, <span class="emphasis"><em>element_t
+        a</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>n</em></span> =
+            <span class="emphasis"><em>a</em></span> + <span class=
+            "emphasis"><em>a</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_halve</strong></span>(<span class=
+        "emphasis"><em>element_t n</em></span>, <span class=
+        "emphasis"><em>element_t a</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>n</em></span> =
+            <span class="emphasis"><em>a/2</em></span></p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_square</strong></span>(<span class="emphasis"><em>element_t
+        n</em></span>, <span class="emphasis"><em>element_t
+        a</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>n</em></span> =
+            <span class=
+            "emphasis"><em>a</em></span><sup>2</sup></p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_neg</strong></span>(<span class=
+        "emphasis"><em>element_t n</em></span>, <span class=
+        "emphasis"><em>element_t a</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>n</em></span> =
+            -<span class="emphasis"><em>a</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_invert</strong></span>(<span class="emphasis"><em>element_t
+        n</em></span>, <span class="emphasis"><em>element_t
+        a</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>n</em></span> to the
+            inverse of <span class=
+            "emphasis"><em>a</em></span>.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section" title="Exponentiating elements">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_exponentiating_elements"></a>Exponentiating
+              elements</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>Exponentiation and multiexponentiation functions. If it
+        is known in advance that a particular element will be
+        exponentiated several times in the future, time can be
+        saved in the long run by first calling the preprocessing
+        function:</p>
+        <pre class="literallayout">
+element_pp_t g_pp;
+element_pp_init(g_pp, g);
+element_pp_pow(h, pow1, g_pp); // h = g^pow1
+element_pp_pow(h, pow2, g_pp); // h = g^pow2
+element_pp_pow(h, pow3, g_pp); // h = g^pow3
+element_pp_clear(g_pp);
+</pre>
+
+        <p>void <span class=
+        "strong"><strong>element_pow_mpz</strong></span>(<span class="emphasis"><em>element_t
+        x</em></span>, <span class="emphasis"><em>element_t
+        a</em></span>, <span class="emphasis"><em>mpz_t
+        n</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>x</em></span> =
+            <span class=
+            "emphasis"><em>a</em></span><sup><span class=
+            "emphasis"><em>n</em></span></sup>, that is
+            <span class="emphasis"><em>a</em></span> times
+            <span class="emphasis"><em>a</em></span> times … times
+            <span class="emphasis"><em>a</em></span> where there
+            are <span class="emphasis"><em>n</em></span>
+            <span class="emphasis"><em>a</em></span>'s.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_pow_zn</strong></span>(<span class="emphasis"><em>element_t
+        x</em></span>, <span class="emphasis"><em>element_t
+        a</em></span>, <span class="emphasis"><em>element_t
+        n</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set <span class="emphasis"><em>x</em></span> =
+            <span class=
+            "emphasis"><em>a</em></span><sup><span class=
+            "emphasis"><em>n</em></span></sup>, where <span class=
+            "emphasis"><em>n</em></span> is an element of a ring
+            <span class=
+            "strong"><strong>Z</strong></span><sub>N</sub> for some
+            <span class="emphasis"><em>N</em></span> (typically the
+            order of the algebraic structure <span class=
+            "emphasis"><em>x</em></span> lies in).</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_pow2_mpz</strong></span>(<span class="emphasis"><em>element_t
+        x</em></span>, <span class="emphasis"><em>element_t
+        a1</em></span>, <span class="emphasis"><em>mpz_t
+        n1</em></span>, <span class="emphasis"><em>element_t
+        a2</em></span>, <span class="emphasis"><em>mpz_t
+        n2</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Sets <span class="emphasis"><em>x</em></span> =
+            <span class=
+            "emphasis"><em>a1</em></span><sup><span class=
+            "emphasis"><em>n1</em></span></sup> <span class=
+            "emphasis"><em>a2</em></span><sup><span class=
+            "emphasis"><em>n2</em></span></sup>, and is generally
+            faster than performing two separate
+            exponentiations.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_pow2_zn</strong></span>(<span class="emphasis"><em>element_t
+        x</em></span>, <span class="emphasis"><em>element_t
+        a1</em></span>, <span class="emphasis"><em>element_t
+        n1</em></span>, <span class="emphasis"><em>element_t
+        a2</em></span>, <span class="emphasis"><em>element_t
+        n2</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Also sets <span class="emphasis"><em>x</em></span> =
+            <span class=
+            "emphasis"><em>a1</em></span><sup><span class=
+            "emphasis"><em>n1</em></span></sup> <span class=
+            "emphasis"><em>a2</em></span><sup><span class=
+            "emphasis"><em>n2</em></span></sup>, but <span class=
+            "emphasis"><em>n1</em></span>, <span class=
+            "emphasis"><em>n2</em></span> must be elements of a
+            ring <span class=
+            "strong"><strong>Z</strong></span><sub>n</sub> for some
+            integer n.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_pow3_mpz</strong></span>(<span class="emphasis"><em>element_t
+        x</em></span>, <span class="emphasis"><em>element_t
+        a1</em></span>, <span class="emphasis"><em>mpz_t
+        n1</em></span>, <span class="emphasis"><em>element_t
+        a2</em></span>, <span class="emphasis"><em>mpz_t
+        n2</em></span>, <span class="emphasis"><em>element_t
+        a3</em></span>, <span class="emphasis"><em>mpz_t
+        n3</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Sets <span class="emphasis"><em>x</em></span> =
+            <span class=
+            "emphasis"><em>a1</em></span><sup><span class=
+            "emphasis"><em>n1</em></span></sup> <span class=
+            "emphasis"><em>a2</em></span><sup><span class=
+            "emphasis"><em>n2</em></span></sup> <span class=
+            "emphasis"><em>a3</em></span><sup><span class=
+            "emphasis"><em>n3</em></span></sup>, generally faster
+            than performing three separate exponentiations.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_pow3_zn</strong></span>(<span class="emphasis"><em>element_t
+        x</em></span>, <span class="emphasis"><em>element_t
+        a1</em></span>, <span class="emphasis"><em>element_t
+        n1</em></span>, <span class="emphasis"><em>element_t
+        a2</em></span>, <span class="emphasis"><em>element_t
+        n2</em></span>, <span class="emphasis"><em>element_t
+        a3</em></span>, <span class="emphasis"><em>element_t
+        n3</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Also sets <span class="emphasis"><em>x</em></span> =
+            <span class=
+            "emphasis"><em>a1</em></span><sup><span class=
+            "emphasis"><em>n1</em></span></sup> <span class=
+            "emphasis"><em>a2</em></span><sup><span class=
+            "emphasis"><em>n2</em></span></sup> <span class=
+            "emphasis"><em>a3</em></span><sup><span class=
+            "emphasis"><em>n3</em></span></sup>, but <span class=
+            "emphasis"><em>n1</em></span>, <span class=
+            "emphasis"><em>n2</em></span>, <span class=
+            "emphasis"><em>n3</em></span> must be elements of a
+            ring <span class=
+            "strong"><strong>Z</strong></span><sub>n</sub> for some
+            integer n.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_pp_init</strong></span>(<span class="emphasis"><em>element_pp_t
+        p</em></span>, <span class="emphasis"><em>element_t
+        in</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Prepare to exponentiate an element <span class=
+            "emphasis"><em>in</em></span>, and store preprocessing
+            information in <span class=
+            "emphasis"><em>p</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_pp_clear</strong></span>(<span class="emphasis"><em>element_pp_t
+        p</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Clear <span class="emphasis"><em>p</em></span>.
+            Should be called after <span class=
+            "emphasis"><em>p</em></span> is no longer needed.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_pp_pow</strong></span>(<span class="emphasis"><em>element_t
+        out</em></span>, <span class="emphasis"><em>mpz_t
+        power</em></span>, <span class="emphasis"><em>element_pp_t
+        p</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Raise <span class="emphasis"><em>in</em></span> to
+            <span class="emphasis"><em>power</em></span> and store
+            the result in <span class=
+            "emphasis"><em>out</em></span>, where <span class=
+            "emphasis"><em>in</em></span> is a previously
+            preprocessed element, that is, the second argument
+            passed to a previous <span class=
+            "strong"><strong>element_pp_init</strong></span>
+            call.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_pp_pow_zn</strong></span>(<span class="emphasis"><em>element_t
+        out</em></span>, <span class="emphasis"><em>element_t
+        power</em></span>, <span class="emphasis"><em>element_pp_t
+        p</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Same except <span class=
+            "emphasis"><em>power</em></span> is an element of
+            <span class=
+            "strong"><strong>Z</strong></span><sub>n</sub> for some
+            integer n.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_dlog_brute_force</strong></span>(<span class="emphasis"><em>element_t
+        x</em></span>, <span class="emphasis"><em>element_t
+        g</em></span>, <span class="emphasis"><em>element_t
+        h</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Computes <span class="emphasis"><em>x</em></span>
+            such that <span class="emphasis"><em>g<sup>x</sup> =
+            h</em></span> by brute force, where <span class=
+            "emphasis"><em>x</em></span> lies in a field where
+            <code class="literal">element_set_mpz()</code> makes
+            sense.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>element_dlog_pollard_rho</strong></span>(<span class="emphasis"><em>element_t
+        x</em></span>, <span class="emphasis"><em>element_t
+        g</em></span>, <span class="emphasis"><em>element_t
+        h</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Computes <span class="emphasis"><em>x</em></span>
+            such that <span class="emphasis"><em>g<sup>x</sup> =
+            h</em></span> using Pollard rho method, where
+            <span class="emphasis"><em>x</em></span> lies in a
+            field where <code class=
+            "literal">element_set_mpz()</code> makes sense.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section" title="Comparing elements">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_comparing_elements"></a>Comparing elements</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>These functions compare elements from the same algebraic
+        structure.</p>
+
+        <p>int <span class=
+        "strong"><strong>element_is1</strong></span>(<span class=
+        "emphasis"><em>element_t n</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns true if <span class=
+            "emphasis"><em>n</em></span> is 1.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_is0</strong></span>(<span class=
+        "emphasis"><em>element_t n</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns true if <span class=
+            "emphasis"><em>n</em></span> is 0.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_cmp</strong></span>(<span class=
+        "emphasis"><em>element_t a</em></span>, <span class=
+        "emphasis"><em>element_t b</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns 0 if <span class=
+            "emphasis"><em>a</em></span> and <span class=
+            "emphasis"><em>b</em></span> are the same, nonzero
+            otherwise.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_is_sqr</strong></span>(<span class="emphasis"><em>element_t
+        a</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns nonzero if <span class=
+            "emphasis"><em>a</em></span> is a perfect square
+            (quadratic residue), zero otherwise.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_sgn</strong></span>(<span class=
+        "emphasis"><em>element_t a</em></span>)</p>
+
+        <p>int <span class=
+        "strong"><strong>element_sign</strong></span>(<span class=
+        "emphasis"><em>element_t a</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>If <span class="emphasis"><em>a</em></span> is zero,
+            returns 0. For nozero <span class=
+            "emphasis"><em>a</em></span> the behaviour depends on
+            the algebraic structure, but has the property that
+            element_sgn(<span class="emphasis"><em>a</em></span>) =
+            -element_sgn(-<span class="emphasis"><em>a</em></span>)
+            and element_sgn(<span class=
+            "emphasis"><em>a</em></span>) = 0 implies <span class=
+            "emphasis"><em>a</em></span> = 0 with overwhelming
+            probability.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section" title="Element I/O">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_element_i_o"></a>Element I/O</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>Functions for producing human-readable outputs for
+        elements. Converting elements to and from bytes are
+        discussed later.</p>
+
+        <p>size_t <span class=
+        "strong"><strong>element_out_str</strong></span>(<span class="emphasis"><em>FILE
+        * stream</em></span>, <span class="emphasis"><em>int
+        base</em></span>, <span class="emphasis"><em>element_t
+        e</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Output <span class="emphasis"><em>e</em></span> on
+            <span class="emphasis"><em>stream</em></span> in base
+            <span class="emphasis"><em>base</em></span>. The base
+            must be between 2 and 36.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_printf</strong></span>(<span class="emphasis"><em>const
+        char *format</em></span>, <span class=
+        "emphasis"><em>…</em></span>)</p>
+
+        <p>int <span class=
+        "strong"><strong>element_fprintf</strong></span>(<span class="emphasis"><em>FILE
+        * stream</em></span>, <span class="emphasis"><em>const char
+        *format</em></span>, <span class=
+        "emphasis"><em>…</em></span>)</p>
+
+        <p>int <span class=
+        "strong"><strong>element_snprintf</strong></span>(<span class="emphasis"><em>char
+        *buf</em></span>, <span class="emphasis"><em>size_t
+        size</em></span>, <span class="emphasis"><em>const char
+        *fmt</em></span>, <span class=
+        "emphasis"><em>…</em></span>)</p>
+
+        <p>int <span class=
+        "strong"><strong>element_vsnprintf</strong></span>(<span class="emphasis"><em>char
+        *buf</em></span>, <span class="emphasis"><em>size_t
+        size</em></span>, <span class="emphasis"><em>const char
+        *fmt</em></span>, <span class="emphasis"><em>va_list
+        ap</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Same as printf family except also has the
+            <span class="emphasis"><em>B</em></span> conversion
+            specifier for types of <span class=
+            "strong"><strong>element_t</strong></span>, and
+            <span class="emphasis"><em>Y</em></span>, <span class=
+            "emphasis"><em>Z</em></span> conversion specifiers for
+            <code class="literal">mpz_t</code>. For example if
+            <span class="emphasis"><em>e</em></span> is of type
+            <code class="literal">element_t</code> then</p>
+            <pre class="literallayout">
+element_printf("%B\n", e);
+</pre>
+
+            <p>will print the value of <span class=
+            "emphasis"><em>e</em></span> in a human-readable form
+            on standard output.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_snprint</strong></span>(<span class="emphasis"><em>char
+        *s</em></span>, <span class="emphasis"><em>size_t
+        n</em></span>, <span class="emphasis"><em>element_t
+        e</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Convert an element to a human-friendly string.
+            Behaves as <span class=
+            "strong"><strong>snprintf</strong></span> but only on
+            one element at a time.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_set_str</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>, <span class="emphasis"><em>const char
+        *s</em></span>, <span class="emphasis"><em>int
+        base</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set the element <span class=
+            "emphasis"><em>e</em></span> from <span class=
+            "emphasis"><em>s</em></span>, a null-terminated C
+            string in base <span class=
+            "emphasis"><em>base</em></span>. Whitespace is ignored.
+            Points have the form "[<span class=
+            "emphasis"><em>x,y</em></span>]" or "<span class=
+            "emphasis"><em>O</em></span>", while polynomials have
+            the form "[<span class=
+            "emphasis"><em>a0,…,an</em></span>]". Returns number of
+            characters read (unlike GMP’s mpz_set_str). A return
+            code of zero means PBC could not find a well-formed
+            string describing an element.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section" title="Random elements">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_random_elements"></a>Random elements</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>Only works for finite algebraic structures. Effect on
+        polynomial rings, fields of characteristic zero, etc.
+        undefined.</p>
+
+        <p>See <a class="xref" href="#randomref" title=
+        "Random bits">the section called “Random bits”</a> for how
+        PBC gets random bits.</p>
+
+        <p>void <span class=
+        "strong"><strong>element_random</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>If the <span class="emphasis"><em>e</em></span> lies
+            in a finite algebraic structure, assigns a uniformly
+            random element to <span class=
+            "emphasis"><em>e</em></span>.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section" title="Element import/export">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_element_import_export"></a>Element
+              import/export</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>Functions for serializing and deserializing
+        elements.</p>
+
+        <p>int <span class=
+        "strong"><strong>element_length_in_bytes</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns the length in bytes the element <span class=
+            "emphasis"><em>e</em></span> will take to represent</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_to_bytes</strong></span>(<span class="emphasis"><em>unsigned
+        char *data</em></span>, <span class=
+        "emphasis"><em>element_t e</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Converts <span class="emphasis"><em>e</em></span> to
+            byte, writing the result in the buffer <span class=
+            "emphasis"><em>data</em></span>. The number of bytes it
+            will write can be determined from calling <span class=
+            "strong"><strong>element_length_in_bytes()</strong></span>.
+            Returns number of bytes written.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_from_bytes</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>, <span class="emphasis"><em>unsigned char
+        *data</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Reads <span class="emphasis"><em>e</em></span> from
+            the buffer <span class="emphasis"><em>data</em></span>,
+            and returns the number of bytes read.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_to_bytes_x_only</strong></span>(<span class="emphasis"><em>unsigned
+        char *data</em></span>, <span class=
+        "emphasis"><em>element_t e</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Assumes <span class="emphasis"><em>e</em></span> is
+            a point on an elliptic curve. Writes the x-coordinate
+            of <span class="emphasis"><em>e</em></span> to the
+            buffer <span class="emphasis"><em>data</em></span></p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_from_bytes_x_only</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>, <span class="emphasis"><em>unsigned char
+        *data</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Assumes <span class="emphasis"><em>e</em></span> is
+            a point on an elliptic curve. Sets <span class=
+            "emphasis"><em>e</em></span> to a point with
+            x-coordinate represented by the buffer <span class=
+            "emphasis"><em>data</em></span>. This is not unique.
+            For each <span class=
+            "emphasis"><em>x</em></span>-coordinate, there exist
+            two different points, at least for the elliptic curves
+            in PBC. (They are inverses of each other.)</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_length_in_bytes_x_only</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Assumes <span class="emphasis"><em>e</em></span> is
+            a point on an elliptic curve. Returns the length in
+            bytes needed to hold the x-coordinate of <span class=
+            "emphasis"><em>e</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_to_bytes_compressed</strong></span>(<span class="emphasis"><em>unsigned
+        char *data</em></span>, <span class=
+        "emphasis"><em>element_t e</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>If possible, outputs a compressed form of the
+            element <span class="emphasis"><em>e</em></span> to the
+            buffer of bytes <span class=
+            "emphasis"><em>data</em></span>. Currently only
+            implemented for points on an elliptic curve.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_from_bytes_compressed</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>, <span class="emphasis"><em>unsigned char
+        *data</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Sets element <span class=
+            "emphasis"><em>e</em></span> to the element in
+            compressed form in the buffer of bytes <span class=
+            "emphasis"><em>data</em></span>. Currently only
+            implemented for points on an elliptic curve.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_length_in_bytes_compressed</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns the number of bytes needed to hold
+            <span class="emphasis"><em>e</em></span> in compressed
+            form. Currently only implemented for points on an
+            elliptic curve.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>element_item_count</strong></span>(<span class="emphasis"><em>element_t
+        e</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>For points, returns the number of coordinates. For
+            polynomials, returns the number of coefficients.
+            Otherwise returns zero.</p>
+          </blockquote>
+        </div>
+
+        <p>element_t <span class=
+        "strong"><strong>element_item</strong></span>(<span class=
+        "emphasis"><em>element_t e</em></span>, <span class=
+        "emphasis"><em>int i</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>For points, returns <span class=
+            "emphasis"><em>n</em></span>th coordinate. For
+            polynomials, returns coefficient of <span class=
+            "emphasis"><em>x<sup>n</sup></em></span>. Otherwise
+            returns NULL. The element the return value points to
+            may be modified.</p>
+          </blockquote>
+        </div>
+
+        <p>element_t <span class=
+        "strong"><strong>element_x</strong></span>(<span class=
+        "emphasis"><em>element_t a</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Equivalent to <code class="literal">element_item(a,
+            0)</code>.</p>
+          </blockquote>
+        </div>
+
+        <p>element_t <span class=
+        "strong"><strong>element_y</strong></span>(<span class=
+        "emphasis"><em>element_t a</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Equivalent to <code class="literal">element_item(a,
+            1)</code>.</p>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter" title=
+    "Chapter&nbsp;5.&nbsp;Param functions">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h2 class="title"><a name="paramchap" id=
+            "paramchap"></a>Chapter&nbsp;5.&nbsp;Param
+            functions</h2>
+          </div>
+        </div>
+      </div>
+
+      <p>Pairings are initialized from <span class=
+      "emphasis"><em>pairing parameters</em></span>, which are
+      objects of type <code class="literal">pbc_param_t</code>.
+      Some applications can ignore this data type because
+      <code class="literal">pairing_init_set_str()</code> handles
+      it behind the scenes: it reads a string as a <code class=
+      "literal">pbc_param_t</code>, then initializes a pairing with
+      these parameters.</p>
+
+      <p>int <span class=
+      "strong"><strong>pbc_param_init_set_str</strong></span>(<span class="emphasis"><em>pbc_param_t
+      par</em></span>, <span class="emphasis"><em>const char
+      *s</em></span>)</p>
+
+      <div class="blockquote">
+        <blockquote class="blockquote">
+          <p>Initializes pairing parameters from the string
+          <span class="emphasis"><em>s</em></span>. Returns 0 if
+          successful, 1 otherwise.</p>
+        </blockquote>
+      </div>
+
+      <p>int <span class=
+      "strong"><strong>pbc_param_init_set_buf</strong></span>(<span class="emphasis"><em>pbc_param_t
+      par</em></span>, <span class="emphasis"><em>const char
+      *s</em></span>, <span class="emphasis"><em>size_t
+      len</em></span>)</p>
+
+      <div class="blockquote">
+        <blockquote class="blockquote">
+          <p>Same, but read at most <span class=
+          "emphasis"><em>len</em></span> bytes. If <span class=
+          "emphasis"><em>len</em></span> is 0, it behaves as the
+          previous function. Returns 0 if successful, 1
+          otherwise.</p>
+        </blockquote>
+      </div>
+
+      <p>void <span class=
+      "strong"><strong>pbc_param_out_str</strong></span>(<span class="emphasis"><em>FILE
+      *stream</em></span>, <span class="emphasis"><em>pbc_param_t
+      p</em></span>)</p>
+
+      <div class="blockquote">
+        <blockquote class="blockquote">
+          <p>Write pairing parameters to <span class=
+          "emphasis"><em>'stream</em></span>' in a text format.</p>
+        </blockquote>
+      </div>
+
+      <p>void <span class=
+      "strong"><strong>pbc_param_clear</strong></span>(<span class=
+      "emphasis"><em>pbc_param_t p</em></span>)</p>
+
+      <div class="blockquote">
+        <blockquote class="blockquote">
+          <p>Clear <span class="emphasis"><em>p</em></span>. Call
+          after <span class="emphasis"><em>p</em></span> is no
+          longer needed.</p>
+        </blockquote>
+      </div>
+
+      <div class="section" title="Param generation">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "paramgenchap" id="paramgenchap"></a>Param
+              generation</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>These were used to prepare the sample parameters in the
+        <code class="literal">param</code> subdirectory.</p>
+
+        <p>We label the pairing families with capital letters
+        roughly in the order of discovery, so we can refer to them
+        easily. Type A is fastest. Type D is a good choice when
+        elements should be short but is slower. Type F has even
+        shorter elements but is slower still. The speed differences
+        are hardware-dependent, and also change when preprocessing
+        is used. Type B and C are unimplemented.</p>
+
+        <p>The <code class="literal">pbc_cm_t</code> data type
+        holds CM parameters that are used to generate type D and G
+        curves.</p>
+
+        <p>void <span class=
+        "strong"><strong>pbc_cm_init</strong></span>(<span class=
+        "emphasis"><em>pbc_cm_t cm</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Initializes <span class=
+            "emphasis"><em>cm</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pbc_cm_clear</strong></span>(<span class=
+        "emphasis"><em>pbc_cm_t cm</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Clears <span class=
+            "emphasis"><em>cm</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>pbc_cm_search_d</strong></span>(<span class="emphasis"><em>int
+        (*callback)(pbc_cm_t</em></span>, <span class=
+        "emphasis"><em>void *)</em></span>, <span class=
+        "emphasis"><em>void *data</em></span>, <span class=
+        "emphasis"><em>unsigned int D</em></span>, <span class=
+        "emphasis"><em>unsigned int bitlimit</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>For a given discriminant D, searches for type D
+            pairings suitable for cryptography (MNT curves of
+            embedding degree 6). The group order is at most
+            <span class="emphasis"><em>bitlimit</em></span> bits.
+            For each set of CM parameters found, call <span class=
+            "emphasis"><em>callback</em></span> with <code class=
+            "literal">pbc_cm_t</code> and given <code class=
+            "literal">void *</code>. If the callback returns
+            nonzero, stops search and returns that value. Otherwise
+            returns 0.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>pbc_cm_search_g</strong></span>(<span class="emphasis"><em>int
+        (*callback)(pbc_cm_t</em></span>, <span class=
+        "emphasis"><em>void *)</em></span>, <span class=
+        "emphasis"><em>void *data</em></span>, <span class=
+        "emphasis"><em>unsigned int D</em></span>, <span class=
+        "emphasis"><em>unsigned int bitlimit</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>For a given discriminant D, searches for type G
+            pairings suitable for cryptography (Freeman curve). The
+            group order is at most <span class=
+            "emphasis"><em>bitlimit</em></span> bits. For each set
+            of CM parameters found, call <span class=
+            "emphasis"><em>callback</em></span> with <code class=
+            "literal">pbc_cm_t</code> and given <code class=
+            "literal">void *</code>. If the callback returns
+            nonzero, stops search and returns that value. Otherwise
+            returns 0.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pbc_param_init_a_gen</strong></span>(<span class="emphasis"><em>pbc_param_t
+        par</em></span>, <span class="emphasis"><em>int
+        rbits</em></span>, <span class="emphasis"><em>int
+        qbits</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Generate type A pairing parameters and store them in
+            <span class="emphasis"><em>p</em></span>, where the
+            group order r is <span class=
+            "emphasis"><em>rbits</em></span> long, and the order of
+            the base field q is <span class=
+            "emphasis"><em>qbits</em></span> long. Elements take
+            <span class="emphasis"><em>qbits</em></span> to
+            represent.</p>
+
+            <p>To be secure, generic discrete log algorithms must
+            be infeasible in groups of order r, and finite field
+            discrete log algorithms must be infeasible in finite
+            fields of order q^2, e.g. <span class=
+            "emphasis"><em>rbits</em></span> = 160, <span class=
+            "emphasis"><em>qbits</em></span> = 512.</p>
+
+            <p>The file <code class="literal">param/a.param</code>
+            contains parameters for a type A pairing suitable for
+            cryptographic use.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pbc_param_init_a1_gen</strong></span>(<span class="emphasis"><em>pbc_param_t
+        param</em></span>, <span class="emphasis"><em>mpz_t
+        n</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Generate type A1 pairing parameters and store them
+            in <span class="emphasis"><em>p</em></span>. The group
+            order will be <span class="emphasis"><em>n</em></span>.
+            The order of the base field is a few bits longer. To be
+            secure, generic discrete log algorithms must be
+            infeasible in groups of order <span class=
+            "emphasis"><em>n</em></span>, and finite field discrete
+            log algorithms must be infeasible in finite fields of
+            order roughly <span class=
+            "emphasis"><em>n</em></span><sup>2</sup>. Additionally,
+            <span class="emphasis"><em>n</em></span> should be hard
+            to factorize.</p>
+
+            <p>For example: <span class=
+            "emphasis"><em>n</em></span> a product of two primes,
+            each at least 512 bits.</p>
+
+            <p>The file <code class="literal">param/a1.param</code>
+            contains sample parameters for a type A1 pairing, but
+            it is only for benchmarking: it is useless without the
+            factorization of <code class="literal">n</code>, the
+            order of the group.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pbc_param_init_d_gen</strong></span>(<span class="emphasis"><em>pbc_param_t
+        p</em></span>, <span class="emphasis"><em>pbc_cm_t
+        cm</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Type D curves are generated using the complex
+            multiplication (CM) method. This function sets
+            <span class="emphasis"><em>p</em></span> to a type D
+            pairing parameters from CM parameters <span class=
+            "emphasis"><em>cm</em></span>. Other library calls
+            search for appropriate CM parameters and the results
+            can be passed to this function.</p>
+
+            <p>To be secure, generic discrete log algorithms must
+            be infeasible in groups of order r, and finite field
+            discrete log algorithms must be infeasible in finite
+            fields of order q<sup>6</sup>. For usual CM parameters,
+            r is a few bits smaller than q.</p>
+
+            <p>Using type D pairings allows elements of group G1 to
+            be quite short, typically 170-bits. Because of a
+            certain trick, elements of group G2 need only be 3
+            times longer, that is, about 510 bits rather than 6
+            times long. They are not quite as short as type F
+            pairings, but much faster.</p>
+
+            <p>I sometimes refer to a type D curve as a triplet of
+            numbers: the discriminant, the number of bits in the
+            prime q, and the number of bits in the prime r. The
+            <code class="literal">gen/listmnt</code> program prints
+            these numbers.</p>
+
+            <p>Among the bundled type D curve parameters are the
+            curves 9563-201-181, 62003-159-158 and 496659-224-224
+            which have shortened names <code class=
+            "literal">param/d201.param</code>, <code class=
+            "literal">param/d159.param</code> and <code class=
+            "literal">param/d225.param</code> respectively.</p>
+
+            <p>See <code class="literal">gen/listmnt.c</code> and
+            <code class="literal">gen/gendparam.c</code> for how to
+            generate type D pairing parameters.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pbc_param_init_e_gen</strong></span>(<span class="emphasis"><em>pbc_param_t
+        p</em></span>, <span class="emphasis"><em>int
+        rbits</em></span>, <span class="emphasis"><em>int
+        qbits</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Generate type E pairing parameters and store them in
+            <span class="emphasis"><em>p</em></span>, where the
+            group order r is <span class=
+            "emphasis"><em>rbits</em></span> long, and the order of
+            the base field q is <span class=
+            "emphasis"><em>qbits</em></span> long. To be secure,
+            generic discrete log algorithms must be infeasible in
+            groups of order r, and finite field discrete log
+            algorithms must be infeasible in finite fields of order
+            q, e.g. <span class="emphasis"><em>rbits</em></span> =
+            160, <span class="emphasis"><em>qbits</em></span> =
+            1024.</p>
+
+            <p>This pairing is just a curiosity: it can be
+            implemented entirely in a field of prime order, that
+            is, only arithmetic modulo a prime is needed and there
+            is never a need to extend a field.</p>
+
+            <p>If discrete log in field extensions are found to be
+            substantially easier to solve than previously thought,
+            or discrete log can be solved in elliptic curves as
+            easily as they can be in finite fields, this pairing
+            type may become useful.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pbc_param_init_f_gen</strong></span>(<span class="emphasis"><em>pbc_param_t
+        p</em></span>, <span class="emphasis"><em>int
+        bits</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Generate type F pairing parameters and store them in
+            <span class="emphasis"><em>p</em></span>. Both the
+            group order r and the order of the base field q will be
+            roughly <span class="emphasis"><em>bits</em></span>-bit
+            numbers. To be secure, generic discrete log algorithms
+            must be infeasible in groups of order r, and finite
+            field discrete log algorithms must be infeasible in
+            finite fields of order q^12, e.g. <span class=
+            "emphasis"><em>bits</em></span> = 160.</p>
+
+            <p>Type F should be used when the top priority is to
+            minimize bandwidth (e.g. short signatures). The current
+            implementation makes them slow.</p>
+
+            <p>If finite field discrete log algorithms improve
+            further, type D pairings will have to use larger
+            fields, but type F can still remain short, up to a
+            point.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pbc_param_init_g_gen</strong></span>(<span class="emphasis"><em>pbc_param_t
+        p</em></span>, <span class="emphasis"><em>pbc_cm_t
+        cm</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Type G curves are generated using the complex
+            multiplication (CM) method. This function sets
+            <span class="emphasis"><em>p</em></span> to a type G
+            pairing parameters from CM parameters <span class=
+            "emphasis"><em>cm</em></span>. They have embedding
+            degree 10.</p>
+
+            <p>To be secure, generic discrete log algorithms must
+            be infeasible in groups of order r, and finite field
+            discrete log algorithms must be infeasible in finite
+            fields of order q<sup>6</sup>. For usual CM parameters,
+            r is a few bits smaller than q.</p>
+
+            <p>They are quite slow at the moment so for now type F
+            is a better choice.</p>
+
+            <p>The file <code class=
+            "literal">param/g149.param</code> contains parameters
+            for a type G pairing with 149-bit group and field
+            sizes.</p>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter" title=
+    "Chapter&nbsp;6.&nbsp;Other functions">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h2 class="title"><a name=
+            "_other_functions"></a>Chapter&nbsp;6.&nbsp;Other
+            functions</h2>
+          </div>
+        </div>
+      </div>
+
+      <p>Random number generation, memory allocation, logging.</p>
+
+      <div class="section" title="Random bits">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "randomref" id="randomref"></a>Random bits</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>The first time PBC is asked to generate a random number,
+        the library will try to open the file <code class=
+        "literal">/dev/urandom</code> as a source of random bits.
+        If this fails, PBC falls back to a deterministic random
+        number generator (which is of course completely useless for
+        cryptography).</p>
+
+        <p>It is possible to change the file used for random bits.
+        Also, explicitly selecting the deterministic random number
+        generator will suppress the warning.</p>
+
+        <p>On Windows, by default, PBC uses the Microsoft Crypto
+        API to generate random bits.</p>
+
+        <p>void <span class=
+        "strong"><strong>pbc_random_set_file</strong></span>(<span class="emphasis"><em>char
+        *filename</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Sets <span class="emphasis"><em>filename</em></span>
+            as a source of random bytes. For example, on Linux one
+            might use <code class="literal">/dev/random</code>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pbc_random_set_deterministic</strong></span>(<span class="emphasis"><em>unsigned
+        int seed</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Uses a determinstic random number generator, seeded
+            with <span class="emphasis"><em>seed</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pbc_random_set_function</strong></span>(<span class="emphasis"><em>void
+        (*fun)(mpz_t</em></span>, <span class=
+        "emphasis"><em>mpz_t</em></span>, <span class=
+        "emphasis"><em>void *)</em></span>, <span class=
+        "emphasis"><em>void *data</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Uses given function as a random number
+            generator.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pbc_mpz_random</strong></span>(<span class="emphasis"><em>mpz_t
+        z</em></span>, <span class="emphasis"><em>mpz_t
+        limit</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Selects a random <span class=
+            "emphasis"><em>z</em></span> that is less than
+            <span class="emphasis"><em>limit</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pbc_mpz_randomb</strong></span>(<span class="emphasis"><em>mpz_t
+        z</em></span>, <span class="emphasis"><em>unsigned int
+        bits</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Selects a random <span class=
+            "emphasis"><em>bits</em></span>-bit integer
+            <span class="emphasis"><em>z</em></span>.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section" title="Custom allocation">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_custom_allocation"></a>Custom allocation</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>Like GMP, PBC can be instructed to use custom memory
+        allocation functions. This must be done before any memory
+        allocation is performed, usually at the beginning of a
+        program before any other PBC functions have been
+        called.</p>
+
+        <p>Also like GMP, the PBC wrappers around <code class=
+        "literal">malloc</code> and <code class=
+        "literal">realloc</code> will print a message on standard
+        error and terminate program execution if the calls fail.
+        Replacements for these functions should act similarly.</p>
+
+        <p>However, unlike GMP, PBC does not pass the number of
+        bytes previously allocated along with the pointer in calls
+        to <code class="literal">realloc</code> and <code class=
+        "literal">free</code>.</p>
+
+        <p>void <span class=
+        "strong"><strong>pbc_set_memory_functions</strong></span>(<span class="emphasis"><em>void
+        *(*malloc_fn)(size_t)</em></span>, <span class=
+        "emphasis"><em>void *(*realloc_fn)(void *</em></span>,
+        <span class="emphasis"><em>size_t)</em></span>,
+        <span class="emphasis"><em>void (*free_fn)(void
+        *)</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Set custom allocation functions. The parameters must
+            be function pointers to drop-in replacements for
+            malloc, realloc and free, except that malloc and
+            realloc should terminate the program on failure: they
+            must not return in this case.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section" title="Logging">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_logging"></a>Logging</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>pbc_set_msg_to_stderr</strong></span>(<span class="emphasis"><em>int
+        i</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>By default error messages are printed to standard
+            error. Call <code class=
+            "literal">pbc_set_msg_to_stderr(0)</code> to suppress
+            messages.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pbc_die</strong></span>(<span class=
+        "emphasis"><em>const char *err</em></span>, <span class=
+        "emphasis"><em>…</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Reports error message and exits with code 128.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pbc_info</strong></span>(<span class=
+        "emphasis"><em>const char *err</em></span>, <span class=
+        "emphasis"><em>…</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Reports informational message.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pbc_warn</strong></span>(<span class=
+        "emphasis"><em>const char *err</em></span>, <span class=
+        "emphasis"><em>…</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Reports warning message.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>pbc_error</strong></span>(<span class=
+        "emphasis"><em>const char *err</em></span>, <span class=
+        "emphasis"><em>…</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Reports error message.</p>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter" title=
+    "Chapter&nbsp;7.&nbsp;Bundled programs">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h2 class="title"><a name="bundlechap" id=
+            "bundlechap"></a>Chapter&nbsp;7.&nbsp;Bundled
+            programs</h2>
+          </div>
+        </div>
+      </div>
+
+      <p>Several binaries and curve parameters are bundled with the
+      PBC library, such as <a class="link" href="#pbcintro" title=
+      "Quick start">the <code class="literal">pbc</code>
+      program</a>.</p>
+
+      <p>The <code class="literal">param</code> subdirectory
+      contains pairing parameters one might use in a real
+      cryptosystem. Many of the test programs read the parameters
+      from files such as these on standard input, for example:</p>
+      <pre class="literallayout">
+$ benchmark/benchmark &lt; param/c159.param
+$ example/bls &lt; param/e.param
+</pre>
+
+      <div class="section" title="Pairing-based calculator">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "pbcref" id="pbcref"></a>Pairing-based
+              calculator</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>The <code class="literal">pbc</code> subdirectory
+        contains the pairing-based calculator, <code class=
+        "literal">pbc</code>, which is loosely based on
+        <code class="literal">bc</code>, a well-known arbitrary
+        precision calculator.</p>
+
+        <p>See <code class="literal">pairing_test.pbc</code> for an
+        example script. Some differences: the assignment operator
+        is <code class="literal">:=</code>, and newlines are
+        ordinary whitespace and not statement terminators.</p>
+
+        <p>If started with the <code class="literal">-y</code>
+        option, the syntax is compatible with <code class=
+        "literal">bc</code>: newlines are treated as statement
+        terminators and <code class="literal">=</code> is
+        assignment. Additionally, <code class="literal">pbc</code>
+        displays a prompt. This mode may be easier for
+        beginners.</p>
+
+        <p>Initially, the variables G1, G2, GT and Zr are represent
+        groups associated with a particular A pairing.</p>
+
+        <p>An element is represented with a tree of integers, such
+        as <code class="literal">[[1,2], 3]</code>, or <code class=
+        "literal">4</code>.</p>
+
+        <p>Assignments such as <code class="literal">variable :=
+        expression;</code> return the value of the variable.</p>
+
+        <p>The arithmetic operators <code class="literal">+, -, /,
+        *, ^</code> have the standard precedence. The C comparison
+        operators and ternary operator are available.</p>
+
+        <p>Each statement should be terminated by a semicolon.</p>
+
+        <p>Comments are the same as in (original) C, or begin with
+        "#" and end at a newline.</p>
+
+        <p>Some of the pbc functions:</p>
+
+        <div class="variablelist">
+          <dl>
+            <dt><span class="term"><code class=
+            "literal">init_pairing_A()</code></span></dt>
+
+            <dd>
+              <p class="simpara">Set the variables G1, G2, GT and
+              Zr to the groups in a particular A pairing:</p>
+              <pre class="literallayout">
+init_pairing_A();
+</pre>
+
+              <p class="simpara">Other sample pairings can be used
+              by replacing <code class="literal">A</code> with one
+              of <code class="literal">D, E, F, G</code>.</p>
+            </dd>
+
+            <dt><span class="term"><code class=
+            "literal">rnd(</code><span class=
+            "emphasis"><em>G</em></span><code class=
+            "literal">)</code></span></dt>
+
+            <dd>
+              <p class="simpara">Returns a random element of an
+              algebraic structure <span class=
+              "emphasis"><em>G</em></span>, e.g:</p>
+              <pre class="literallayout">
+g := rnd(Zr);
+</pre>
+
+              <p class="simpara">Synonym: <code class=
+              "literal">random</code>.</p>
+            </dd>
+
+            <dt><span class="term"><code class=
+            "literal">pairing(</code><span class="emphasis"><em>g,
+            h</em></span><code class="literal">)</code></span></dt>
+
+            <dd>
+              <p class="simpara">Returns the pairing applied to
+              <span class="emphasis"><em>g</em></span> and
+              <span class="emphasis"><em>h</em></span>. The element
+              <span class="emphasis"><em>g</em></span> must be an
+              element of G1 and <span class=
+              "emphasis"><em>h</em></span> of G2, e.g:</p>
+              <pre class="literallayout">
+pairing(rnd(G1), rnd(G2));
+</pre>
+            </dd>
+
+            <dt><span class="term"><span class=
+            "emphasis"><em>G</em></span><code class=
+            "literal">(</code><span class=
+            "emphasis"><em>g</em></span><code class=
+            "literal">)</code></span></dt>
+
+            <dd>
+              <p class="simpara">Maps an element <span class=
+              "emphasis"><em>g</em></span> to element of the field
+              <span class="emphasis"><em>G</em></span>, e.g:</p>
+              <pre class="literallayout">
+Zr(123);
+GT([456, 789]);
+</pre>
+            </dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="section" title="Parameter generation">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_parameter_generation"></a>Parameter generation</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>Programs that generate pairing parameters are located in
+        the <code class="literal">gen</code> subdirectory. Some of
+        the programs are already functional enough to be used to
+        find parameters for real applications. I need to write more
+        documentation first; for now, read the source!</p>
+
+        <div class="variablelist">
+          <dl>
+            <dt><span class="term"><span class=
+            "strong"><strong>listmnt</strong></span></span></dt>
+
+            <dd>Searches for discriminants D that lead to MNT
+            curves with subgroups of prime order.</dd>
+
+            <dt><span class="term"><span class=
+            "strong"><strong>genaparam</strong></span>,
+            <span class="strong"><strong>gena1param</strong></span>,
+            <span class="strong"><strong>gendparam</strong></span>,
+            <span class="strong"><strong>geneparam</strong></span>,
+            <span class="strong"><strong>genfparam</strong></span>,
+            <span class=
+            "strong"><strong>gengparam</strong></span></span></dt>
+
+            <dd>Prints parameters for a curve suitable for
+            computing pairings of a given type. The output can be
+            fed to some of the other test programs. The programs
+            <code class="literal">gendparam</code> and <code class=
+            "literal">gengparam</code> should be given a
+            discriminant as the first argument.</dd>
+
+            <dt><span class="term"><span class=
+            "strong"><strong>hilbertpoly</strong></span></span></dt>
+
+            <dd>Prints the Hilbert polynomial for a given range of
+            discriminants. Computing the Hilbert polynomial is an
+            intermediate step when generating type D
+            parameters.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="section" title="Example cryptosystems">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_example_cryptosystems"></a>Example
+              cryptosystems</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>In the <code class="literal">example</code> subdirectory
+        there are various programs that read curve parameters on
+        standard input and perform computations that would be
+        required in a typical implementation of a pairing-based
+        cryptosystem. Sample schemes include:</p>
+
+        <div class="itemizedlist">
+          <ul class="itemizedlist" type="disc">
+            <li class="listitem">Boneh-Lynn-Shacham short
+            signatures</li>
+
+            <li class="listitem">Hess identity-based
+            signatures</li>
+
+            <li class="listitem">Joux tripartite
+            Diffie-Hellman</li>
+
+            <li class="listitem">Paterson identity-based
+            signatures</li>
+
+            <li class="listitem">Yuan-Li identity-based
+            authenticated key agreement</li>
+
+            <li class="listitem">Zhang-Kim identity-based
+            blind/ring signatures</li>
+
+            <li class="listitem">Zhang-Safavi-Naini-Susilo
+            signatures</li>
+          </ul>
+        </div>
+
+        <p>More work would be required to turn these programs into
+        real applications.</p>
+      </div>
+
+      <div class="section" title="Benchmarks">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_benchmarks"></a>Benchmarks</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>I use the programs in the <code class=
+        "literal">benchmark</code> subdirectory to measure running
+        times of pairings, and also RSA decryptions.</p>
+
+        <p>The <code class="literal">benchmark</code> program takes
+        pairing parameters on standard input and reports the
+        average running time of the pairing over 10 runs, while
+        <code class="literal">timersa</code> estimates the time
+        required to perform one 1024-bit RSA decryption.</p>
+      </div>
+    </div>
+
+    <div class="chapter" title=
+    "Chapter&nbsp;8.&nbsp;PBC internals">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h2 class="title"><a name=
+            "_pbc_internals"></a>Chapter&nbsp;8.&nbsp;PBC
+            internals</h2>
+          </div>
+        </div>
+      </div>
+
+      <p>The source code is organized by subdirectories:</p>
+
+      <p><span class="strong"><strong><code class=
+      "literal">include</code></strong></span>: Headers describing
+      the official API. Headers in other places are for internal
+      use only.</p>
+
+      <p><span class="strong"><strong><code class=
+      "literal">arith</code></strong></span>: Finite fields:
+      modular arithmetic, polynomial rings, and polynomial rings
+      modulo a polynomial. Finite fields of low characteristic are
+      unsupported.</p>
+
+      <p><span class="strong"><strong><code class=
+      "literal">ecc</code></strong></span>: Elliptic curve
+      generation, elliptic curve groups and pairings. One source
+      file is dedicated to each type of pairing, containing
+      specialized optimizations. Some of the code requires
+      arbitrary precision complex numbers, which also live here but
+      should be moved elsewhere one day.</p>
+
+      <p><span class="strong"><strong><code class=
+      "literal">misc</code></strong></span>: Dynamic arrays, symbol
+      tables, benchmarking, logging, debugging, other
+      utilities.</p>
+
+      <p><span class="strong"><strong><code class=
+      "literal">gen</code></strong></span>: Programs that generate
+      pairing parameters and list Hilbert polynomials. These were
+      used to prepare the samples in the <code class=
+      "literal">param</code> directory.</p>
+
+      <p><span class="strong"><strong><code class=
+      "literal">example</code></strong></span>: Example programs
+      showing how to use the library.</p>
+
+      <p><span class="strong"><strong><code class=
+      "literal">guru</code></strong></span>: Tests, experimental
+      code.</p>
+
+      <div class="section" title="Groups, rings, fields">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_groups_rings_fields"></a>Groups, rings, fields</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>Algebraic structures are represented in the <code class=
+        "literal">field_t</code> data type, which mostly contains
+        pointers to functions written to perform operations such as
+        addition and multiplication in that particular group, ring
+        or field:</p>
+        <pre class="literallayout">
+struct field_s {
+  ...
+  void (*init)(element_ptr);
+  void (*clear)(element_ptr);
+  ...
+  void (*add)(element_ptr, element_ptr, element_ptr);
+  void (*sub)(element_ptr, element_ptr, element_ptr);
+  void (*mul)(element_ptr, element_ptr, element_ptr);
+  ...
+};
+typedef struct field_s *field_ptr;
+typedef struct field_s field_t[1];
+</pre>
+
+        <p>The name <code class=
+        "literal">algebraic_structure_t</code> is arguably more
+        accurate, but far too cumbersome. It may help if one views
+        groups and rings as handicapped fields.</p>
+
+        <p>The last two lines of the above code excerpt show how
+        GMP and PBC define data types: they are arrays of length
+        one so that when a variable is declared, space is
+        automatically allocated for it on the stack. Yet when used
+        as a argument to a function, a pointer is passed, thus
+        there is no need to explicitly allocate and deallocate
+        memory, nor reference and dereference variables.</p>
+
+        <p>Each <code class="literal">element_t</code> contains a
+        field named <code class="literal">field</code> to such a
+        <code class="literal">field_t</code> variable. The only
+        other field is <code class="literal">data</code>, which
+        stores any data needed for the implementation of the
+        particular algebraic structure the element resides in.</p>
+        <pre class="literallayout">
+struct element_s {
+  struct field_s *field;
+  void *data;
+};
+</pre>
+
+        <p>When an <code class="literal">element_t</code> variable
+        is initialized, <code class="literal">field</code> is set
+        appropriately, and then the initialization specific to that
+        field is called to complete the initialization. Here, a
+        line of code is worth a thousand words:</p>
+        <pre class="literallayout">
+void element_init(element_t e, field_ptr f) {
+  e-&gt;field = f;
+  f-&gt;init(e);
+}
+</pre>
+
+        <p>Thus during a call to one of the <code class=
+        "literal">element_</code> functions, the <code class=
+        "literal">field</code> pointer is followed then the
+        appropriate routine is executed. For example, modular
+        addition results when the input element is an element of a
+        finite field, while polynomial addition is performed for
+        elements of a polynomial ring and so on.</p>
+        <pre class="literallayout">
+void element_add(element_t n, element_t a, element_t b) {
+  n-&gt;field-&gt;add(n, a, b);
+}
+</pre>
+
+        <p>My design may seem dangerous because if a programmer
+        inadvertently attempts to add a polynomial and a point on
+        an elliptic curve, say, the code will compile without
+        warnings since they have the same data type.</p>
+
+        <p>However I settled on having a catch-all “glorified
+        <code class="literal">void *</code>” <code class=
+        "literal">element_t</code> because I wanted to</p>
+
+        <div class="itemizedlist">
+          <ul class="itemizedlist" type="disc">
+            <li class="listitem">extend a field an arbitrary number
+            of times (though in practice, currently I only need to
+            extend a field twice at most),</li>
+
+            <li class="listitem">switch fields easily, so for
+            example a program that benchmarks addition in
+            polynomial rings can be trivially modified to benchmark
+            addition in a group, and</li>
+
+            <li class="listitem">interchange different
+            implementations of the same algebraic structure, for
+            example, compare Montgomery representation versus a
+            naive implementation of integer modulo rings.</li>
+          </ul>
+        </div>
+
+        <p>Additionally, defining <code class=
+        "literal">PBC_DEBUG</code> catches many type
+        mismatches.</p>
+
+        <p>In mathematics, groups, rings and fields should be
+        distinguished, but for implmentation, it is simplest lump
+        them together under the same heading. In any event,
+        distinct data types may lead to a false sense of security.
+        Fields of prime order with different moduli would still
+        fall under the same data type, with unpleasant results if
+        their elements are mistakenly mixed.</p>
+
+        <p>I have vague plans to add flags to <code class=
+        "literal">field_t</code> describing the capabilities of a
+        particular <code class="literal">field_t</code>. These
+        flags would be set during initialization, and would
+        indicate for example whether one can invert every nonzero
+        element, whether there are one or two operations (that is,
+        group versus ring), whether the field is an integer mod
+        ring, polynomial ring, or polynomial mod ring, and so on.
+        Once in place, more runtime checks can be performed to
+        avoid illegal inversion and similar problems.</p>
+
+        <p>Another option is to introduce data types for each of
+        the four pairing-related algebraic structures, namely G1,
+        G2, GT and Zr, as these are the only ones needed for
+        implementing pairing-based cryptosystems.</p>
+
+        <p>An alternative was to simply use <code class=
+        "literal">void *</code> instead of <code class=
+        "literal">element_t</code> and require the programmer to
+        pass the field as a parameter, e.g. <code class=
+        "literal">element_add(a, b, c, F_13)</code>, but I decided
+        the added annoyance of having to type this extra variable
+        every time negated any benefits, such as obviating the need
+        for the <code class="literal">field</code> pointer in
+        <code class="literal">struct element_s</code>, even if one
+        ignores the more serious problem that runtime type checking
+        is considerably harder, if not impossible.</p>
+
+        <p>I suppose one could write a preprocessor to convert one
+        type of notation to the other, but I would like the code to
+        be standard C. (On the other hand, as Hovav Shacham
+        suggested, it may be nice to eventually have a converter
+        that takes human-friendly infix operator expressions like
+        <code class="literal">a = (b + c) * d</code> and outputs
+        the assembly-like <code class="literal">element_</code>
+        equivalents.)</p>
+      </div>
+
+      <div class="section" title="Internal randomness">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_internal_randomness"></a>Internal randomness</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>Some algorithms require a quadratic nonresidue in a
+        given field. These are computed lazily: The first time a
+        quadratic nonresidue is requested, one is generated at
+        random, using the same source of random bits as other PBC
+        random functions. [Which reminds me, should I get rid of
+        the <code class="literal">nqr</code> field and instead have
+        it as part of the <code class="literal">data</code> field
+        in struct field_s?]</p>
+
+        <p>In <code class="literal">fieldquadratic.c</code>, a
+        quadratic field extension is constructed with a square root
+        of this randomly generated quadratic nonresidue in the base
+        field. Thus for a nondeterminstic source of random bits,
+        the same field may be constructed differently on different
+        runs.</p>
+
+        <p>To construct the same field the same way every time, one
+        must record the quadratic nonresidue generated from one
+        run, and call <code class="literal">field_set_nqr()</code>
+        every time this particular construction of a quadratic
+        field extension is desired. Another use for this function
+        is to save time by setting the quadratic nonresidue to some
+        precomputed value.</p>
+
+        <p>Similarly, for higher degree extensions, a random
+        irreducible polynomial may be chosen to construct it, but
+        this must be recorded if the same construction is later
+        required.</p>
+
+        <p>This happens behind the scenes in PBC.</p>
+      </div>
+
+      <div class="section" title="Type A internals">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_type_a_internals"></a>Type A internals</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>Type A pairings are constructed on the curve
+        y<sup>2</sup> = x<sup>3</sup> + x over the field F_q for
+        some prime q = 3 mod 4. Both G1 and G2 are the group of
+        points E(F_q), so this pairing is symmetric. It turns out
+        #E(F_q) = q + 1 and #E(F_q<sup>2</sup>) = (q +
+        1)<sup>2</sup>. Thus the embedding degree k is 2, and hence
+        GT is a subgroup of F_q^2. The order r is some prime factor
+        of q + 1.</p>
+
+        <p>Write q + 1 = r * h. For efficiency, r is picked to be a
+        Solinas prime, that is, r has the form 2<sup>a</sup> +-
+        2<sup>b</sup> +- 1 for some integers 0 &lt; b &lt; a.</p>
+
+        <p>Also, we choose q = -1 mod 12 so F_q<sup>2</sup> can be
+        implemented as F_q[i] (where i = sqrt(-1)) and since q = -1
+        mod 3, cube roots in F_q are easy to compute. This latter
+        feature may be removed because I have not found a use for
+        it yet (in which case we only need q = -1 mod 4).</p>
+
+        <p><code class="literal">a_param</code> struct fields:</p>
+        <pre class="literallayout">
+exp2, exp1, sign1, sign0, r:
+  r = 2^exp2 + sign1 * 2^exp1 + sign0 * 1 (Solinas prime)
+q, h:
+  r * h = q + 1
+  q is a prime, h is a multiple of 12 (thus q = -1 mod 12)
+</pre>
+
+        <p>Type A1 uses the same equation, but have different
+        fields since the library is given r and cannot choose
+        it.</p>
+
+        <p><code class="literal">a1_param</code> struct fields:</p>
+        <pre class="literallayout">
+p, n, l:
+  p + 1 = n * l
+  p is prime, same as the q in a_param, n is the order of the group.
+</pre>
+      </div>
+
+      <div class="section" title="Type B internals">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_type_b_internals"></a>Type B internals</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>Unimplemented. Similar to type A. The curve
+        y<sup>2</sup> = x<sup>3</sup> + 1 over the field F_q for
+        some prime q = 2 mod 3, which implies cube roots in F_q are
+        easy to compute, though we can achieve this for type A
+        pairings by constraining q appropriately. I recommend
+        requiring q = 3 mod 4 as well, so that -1 is a quadratic
+        nonresidue.</p>
+
+        <p>The lack of an x term simplifies some routines such as
+        point doubling.</p>
+
+        <p>It turns out we must choose between symmetry or
+        efficiency due to the nature of a certain optimization.</p>
+      </div>
+
+      <div class="section" title="Type C internals">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_type_c_internals"></a>Type C internals</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>Unimplemented. The supersingular curves y<sup>2</sup> =
+        x<sup>3</sup> + 2x + 1 and y<sup>2</sup> = x<sup>3</sup> +
+        2x - 1 over a field of characteristic 3. Discussed at
+        length by Boneh, Lynn, and Shacham, "Short signatures from
+        the Weil pairing". Many optimizations can be applied to
+        speed up these pairings; see Barreto et al., "Efficient
+        algorithms for pairing-based cryptosystems", but sadly, an
+        attack due to Coppersmith makes these curves less
+        attractive.</p>
+      </div>
+
+      <div class="section" title="Type D internals">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_type_d_internals"></a>Type D internals</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>These are ordinary curves of with embedding degree 6,
+        whose orders are prime or a prime multiplied by a small
+        constant.</p>
+
+        <p>A type D curve is defined over some field F_q and has
+        order h * r where r is a prime and h is a small constant.
+        Over the field F_q<sup>6</sup> its order is a multiple of
+        r<sup>2</sup>.</p>
+
+        <p>Typically the order of the curve E is around 170 bits,
+        as is F_q, the base field, thus q<sup>k</sup> is around the
+        1024-bit mark which is commonly considered good enough.</p>
+
+        <p><code class="literal">d_param</code> struct fields:</p>
+        <pre class="literallayout">
+q   F_q is the base field
+n   # of points in E(F_q)
+r   large prime dividing n
+h   n = h * r
+a   E: y^2 = x^3 + ax + b
+b
+nk  # of points in E(F_q^k)
+hk  nk = hk * r * r
+coeff0 coefficients of a monic cubic irreducible over F_q
+coeff1
+coeff2
+nqr quadratic nonresidue in F_q
+</pre>
+
+        <p>These were discovered by Miyaji, Nakabayashi and Takano,
+        "New explicit conditions of elliptic curve traces for
+        FR-reduction".</p>
+      </div>
+
+      <div class="section" title="Type E Internals">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_type_e_internals"></a>Type E Internals</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>The CM (Complex Multiplication) method of constructing
+        elliptic curves starts with the Diophantine equation</p>
+        <pre class="literallayout">
+DV^2 = 4q - t^2
+</pre>
+
+        <p>If t = 2 and q = D r<sup>2</sup> h<sup>2</sup> + 1 for
+        some prime r (which we choose to be a Solinas prime) and
+        some integer h, we find that this equation is easily solved
+        with V = 2rh.</p>
+
+        <p>Thus it is easy to find a curve (over the field F_q)
+        with order q - 1. Note r<sup>2</sup> divides q - 1, thus we
+        have an embedding degree of 1.</p>
+
+        <p>Hence all computations necessary for the pairing can be
+        done in F_q alone. There is never any need to extend
+        F_q.</p>
+
+        <p>As q is typically 1024 bits, group elements take a lot
+        of space to represent. Moreover, many optimizations do not
+        apply to this type, resulting in a slower pairing.</p>
+
+        <p><code class="literal">e_param</code> struct fields:</p>
+        <pre class="literallayout">
+exp2, exp1, sign1, sign0, r:
+  r = 2^exp2 + sign1 * 2^exp1 + sign0 * 1 (Solinas prime)
+q, h
+  q = h r^2 + 1 where r is prime, and h is 28 times a perfect square
+a, b
+  E: y^2 = x^3 + ax + b
+</pre>
+      </div>
+
+      <div class="section" title="Type F internals">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_type_f_internals"></a>Type F internals</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>Using carefully crafted polynomials, k = 12 pairings can
+        be constructed. Only 160 bits are needed to represent
+        elements of one group, and 320 bits for the other.</p>
+
+        <p>Also, embedding degree k = 12 allows higher security
+        short signatures. (k = 6 curves cannot be used to scale
+        security from 160-bits to say 256-bits because finite field
+        attacks are subexponential.)</p>
+
+        <p><code class="literal">f_param</code> struct fields:</p>
+        <pre class="literallayout">
+q:
+  The curve is defined over Fq
+r:
+  The order of the curve.
+b:
+  E: y^2= x^3 + b
+beta:
+  A quadratic nonresidue in Fq: used in quadratic extension.
+alpha0, alpha1:
+  x^6 + alpha0 + alpha1 sqrt(beta) is irreducible: used in sextic extension.
+</pre>
+
+        <p>Discovered by Barreto and Naehrig, "Pairing-friendly
+        elliptic curves of prime order".</p>
+      </div>
+
+      <div class="section" title="Type G Internals">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_type_g_internals"></a>Type G Internals</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>Another construction based on the CM method.</p>
+
+        <p><code class="literal">g_param</code> struct fields:</p>
+        <pre class="literallayout">
+q, n, h, r:
+  h * r = n is the order of E(F_q)
+a, b:
+  E: y^2 = x^3 + ax + b
+nk:
+  #E(F_q^10)
+hk:
+  hk * r^2 = nk
+coeff:
+  array of coefficients of polynomial used for quintic extension.
+nqr:
+  a quadratic nonresidue
+</pre>
+
+        <p><code class="literal">g_param</code> struct fields:</p>
+
+        <p>Discovered by Freeman, "Constructing pairing-friendly
+        elliptic curves with embedding degree 10."</p>
+      </div>
+
+      <div class="section" title="Testing functions">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_testing_functions"></a>Testing functions</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>For testing, debugging, demonstrations and benchmarks.
+        Declared in <code class="literal">pbc_test.h</code>:</p>
+
+        <p>void <span class=
+        "strong"><strong>pbc_demo_pairing_init</strong></span>(<span class="emphasis"><em>pairing_t
+        pairing</em></span>, <span class="emphasis"><em>int
+        argc</em></span>, <span class="emphasis"><em>char
+        **argv</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Initializes pairing from file specified as first
+            argument, or from standard input if there is no first
+            argument.</p>
+          </blockquote>
+        </div>
+
+        <p>double <span class=
+        "strong"><strong>pbc_get_time</strong></span>(<span class=
+        "emphasis"><em>void</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns seconds elapsed since the first call to this
+            function. Returns 0 the first time.</p>
+          </blockquote>
+        </div>
+
+        <p><span class=
+        "strong"><strong>EXPECT(condition)</strong></span></p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Macro: if <code class="literal">condition</code>
+            evaluates to 0 then print an error.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>pbc_err_count</strong></span></p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Total number of failed EXPECT checks.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section" title="Dynamic arrays">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_dynamic_arrays"></a>Dynamic arrays</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>The <code class="literal">darray_t</code> data type
+        manages an array of pointers of type <code class=
+        "literal">void \*</code>, allocating more memory when
+        necessary. Declared in <code class=
+        "literal">pbc_darray.h</code>.</p>
+
+        <p>void <span class=
+        "strong"><strong>darray_init</strong></span>(<span class=
+        "emphasis"><em>darray_t a</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Initialize a dynamic array <span class=
+            "emphasis"><em>a</em></span>. Must be called before
+            <span class="emphasis"><em>a</em></span> is used.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>darray_clear</strong></span>(<span class=
+        "emphasis"><em>darray_t a</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Clears a dynamic array <span class=
+            "emphasis"><em>a</em></span>. Should be called after
+            <span class="emphasis"><em>a</em></span> is no longer
+            needed.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>darray_append</strong></span>(<span class=
+        "emphasis"><em>darray_t a</em></span>, <span class=
+        "emphasis"><em>void *p</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Appends <span class="emphasis"><em>p</em></span> to
+            the dynamic array <span class=
+            "emphasis"><em>a</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void * <span class=
+        "strong"><strong>darray_at</strong></span>(<span class=
+        "emphasis"><em>darray_t a</em></span>, <span class=
+        "emphasis"><em>int i</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns the pointer at index <span class=
+            "emphasis"><em>i</em></span> in the dynamic array
+            <span class="emphasis"><em>a</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>darray_remove_index</strong></span>(<span class="emphasis"><em>darray_t
+        a</em></span>, <span class="emphasis"><em>int
+        n</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Removes the pointer at index <span class=
+            "emphasis"><em>i</em></span> in the dynamic array
+            <span class="emphasis"><em>a</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>darray_count</strong></span>(<span class=
+        "emphasis"><em>darray_t a</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns the number of pointers held in <span class=
+            "emphasis"><em>a</em></span>.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section" title="Symbol tables">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_symbol_tables"></a>Symbol tables</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>The <code class="literal">symtab_t</code> data type
+        manages symbol tables where the keys are strings of type
+        <code class="literal">char *</code> and the values are
+        pointers of type <code class="literal">void \*</code>.</p>
+
+        <p>At present, they are implemented inefficiently using
+        dynamic arrays, but this will change if the need arises.
+        They are only used when reading a <code class=
+        "literal">pbc_param_t</code> from a string. Declared in
+        <code class="literal">pbc_symtab.h</code>.</p>
+
+        <p>void <span class=
+        "strong"><strong>symtab_init</strong></span>(<span class=
+        "emphasis"><em>symtab_t t</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Initialize symbol table <span class=
+            "emphasis"><em>t</em></span>. Must be called before
+            <span class="emphasis"><em>t</em></span> is used.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>symtab_clear</strong></span>(<span class=
+        "emphasis"><em>symtab_t t</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Clears symbol table <span class=
+            "emphasis"><em>t</em></span>. Should be called after
+            <span class="emphasis"><em>t</em></span> is no longer
+            needed.</p>
+          </blockquote>
+        </div>
+
+        <p>void <span class=
+        "strong"><strong>symtab_put</strong></span>(<span class=
+        "emphasis"><em>symtab_t t</em></span>, <span class=
+        "emphasis"><em>void *value</em></span>, <span class=
+        "emphasis"><em>const char *key</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Puts <span class="emphasis"><em>value</em></span> at
+            <span class="emphasis"><em>key</em></span> in
+            <span class="emphasis"><em>t</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>int <span class=
+        "strong"><strong>symtab_has</strong></span>(<span class=
+        "emphasis"><em>symtab_t t</em></span>, <span class=
+        "emphasis"><em>const char *key</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns true if <span class=
+            "emphasis"><em>t</em></span> contains key <span class=
+            "emphasis"><em>key</em></span>.</p>
+          </blockquote>
+        </div>
+
+        <p>void * <span class=
+        "strong"><strong>symtab_at</strong></span>(<span class=
+        "emphasis"><em>symtab_t t</em></span>, <span class=
+        "emphasis"><em>const char *key</em></span>)</p>
+
+        <div class="blockquote">
+          <blockquote class="blockquote">
+            <p>Returns pointer at key <span class=
+            "emphasis"><em>key</em></span> in <span class=
+            "emphasis"><em>t</em></span>.</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section" title="Religious stances">
+        <div class="titlepage">
+          <div>
+            <div>
+              <h2 class="title" style="clear: both"><a name=
+              "_religious_stances"></a>Religious stances</h2>
+            </div>
+          </div>
+        </div>
+
+        <p>I chose C because:</p>
+
+        <div class="itemizedlist">
+          <ul class="itemizedlist" type="disc">
+            <li class="listitem">GMP, which PBC requires and is
+            also modeled on, is also written in C.</li>
+
+            <li class="listitem">PBC is intended to be a low-level
+            portable cryptographic library. C is the least common
+            denominator. It should not be difficult to wrap PBC for
+            other languages.</li>
+
+            <li class="listitem">Despite its drawbacks (I would
+            appreciate operator overloading and genericity, and to
+            a lesser extent garbage collection), I’ve found few
+            languages I like better. To quote Rob Pike, C is the
+            desert island language. (I also agree with his
+            statement that OO languages conceptually provide little
+            extra over judicious use of function pointers in
+            C.)</li>
+          </ul>
+        </div>
+
+        <p>With respect to indentation, I’m migrating the code to
+        follow <a class="ulink" href=
+        "http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml"
+        target="_top">Google C++ Style Guide</a> to avoid having to
+        switch styles all the time. The code was originally written
+        using my old style: 4-space indent with 1TBS (One True
+        Brace Style).</p>
+
+        <p>I’d like to have no library dependencies (except
+        standard C libraries), but then I’d have to write a large
+        integer library. Furthermore, I’d have to write it in
+        assembly, and then port it.</p>
+
+        <p>To avoid this, I use an existing library. I selected GMP
+        because the library’s focus is on multiprecision arithmetic
+        and nothing else, and it aims to be as fast as possible on
+        many platforms. Another important factor is that GMP is
+        released under a free license.</p>
+
+        <p>On the other hand, GMP is written to deal with extremely
+        large numbers, while I mostly only need integers that are
+        roughly between 160 and 2048 bits. It is possible a library
+        specializing in numbers of these sizes would be better for
+        PBC.</p>
+
+        <p>I’m fond of GMP’s method for eliminating the need for
+        the <code class="literal">&amp;</code> and <code class=
+        "literal">*</code> operators most of the time by declaring
+        a typedef on arrays of size 1. I try to do the same with
+        PBC for consistency, though this trick does have
+        drawbacks.</p>
+
+        <p>I would like to have GMP as the only library dependency,
+        though I do not mind using other libraries so long as they
+        are optional. For example, one of the test programs is much
+        easier to use if compiled with the GNU readline library,
+        but by default compiles without it and is still
+        functional.</p>
+
+        <p>I dislike the C preprocessor. I like to place
+        platform-specific code in separate files and let the build
+        system work out which one to use. Integer constants can be
+        defined with enum instead. I intend to minimize the number
+        of <code class="literal">#include</code> statements in
+        header files for PBC’s internal use as much as possible
+        (they should be in the <code class="literal">.c</code>
+        files instead), and later perhaps even remove those
+        annoying <code class="literal">#ifndef</code> statements
+        too. I grudgingly accept some macros for PBC’s debugging
+        features.</p>
+
+        <p>I liberally use nested functions, a GNU C extension. I
+        find their expressiveness so indispensable that I’m willing
+        to sacrifice portability for them.</p>
+
+        <p>The <a class="ulink" href=
+        "http://www.gnu.org/software/libc/manual/html_node/Reserved-Names.html"
+        target="_top">GNU libc manual</a> states that data types
+        ending in <code class="literal">_t</code> should not be
+        used because they are reserved for future additions to C or
+        POSIX. On the other hand, I want to stay consistent with
+        GMP, and ending data types with <code class=
+        "literal">_t</code> is common practice.</p>
+      </div>
+    </div>
+
+    <div class="chapter" title=
+    "Chapter&nbsp;9.&nbsp;Security issues">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h2 class="title"><a name=
+            "_security_issues"></a>Chapter&nbsp;9.&nbsp;Security
+            issues</h2>
+          </div>
+        </div>
+      </div>
+
+      <p>Potential problems for the paranoid.</p>
+
+      <p><span class="strong"><strong>Truncated
+      hashes</strong></span></p>
+
+      <p>For points on an elliptic curve over the base field,
+      <code class="literal">element_from_hash()</code> will
+      truncate the input hash until it can represent an
+      x-coordinate in that field. (PBC then computes a
+      corresponding y-coordinate.) Ideally the hash length should
+      be smaller than size of the base field and also the size of
+      the elliptic curve group.</p>
+
+      <p>Hashing to elements in field extensions does not take
+      advantage of the fact that the extension has more elements
+      than the base field. I intend to rewrite the code so that for
+      a degree n extension code, PBC splits the hash into n parts
+      and determine each polynomial coefficient from one ofthe
+      pieces. At the moment every coefficient is the same and
+      depends on the whole hash.</p>
+
+      <p>This is harmless for the base field, because all the
+      pairing types implemented so far use an integer mod ring as
+      the base field, rather than an extension of some low
+      characteristic field.</p>
+
+      <p><span class="strong"><strong>Zeroed
+      memory</strong></span></p>
+
+      <p>Unlike OpenSSL, there are no functions to zero memory
+      locations used in sensitive computations. To some extent, one
+      can use <code class="literal">element_random()</code> to
+      overwrite data.</p>
+
+      <p><span class="strong"><strong>PRNG
+      determinism</strong></span></p>
+
+      <p>On platforms without <code class=
+      "literal">/dev/urandom</code> PBC falls back on a
+      deterministic pseudo-random number generator, except on
+      Windows where it attempts to use the Microsoft Crypto
+      API.</p>
+
+      <p>Also, <code class="literal">/dev/urandom</code> differs
+      from <code class="literal">/dev/random</code>. A quote from
+      its manpage:</p>
+
+      <div class="blockquote">
+        <blockquote class="blockquote">
+          <p>A read from the /dev/urandom device will not block
+          waiting for more entropy. As a result, if there is not
+          sufficient entropy in the entropy pool, the returned
+          values are theoretically vulnerable to a cryptographic
+          attack on the algorithms used by the driver. Knowledge of
+          how to do this is not available in the current
+          non-classified literature, but it is theoretically
+          possible that such an attack may exist. If this is a
+          concern in your application, use /dev/random instead.</p>
+        </blockquote>
+      </div>
+    </div>
+
+    <div class="appendix" title=
+    "Appendix&nbsp;A.&nbsp;Contributors">
+      <div class="titlepage">
+        <div>
+          <div>
+            <h2 class="title"><a name=
+            "_contributors"></a>Appendix&nbsp;A.&nbsp;Contributors</h2>
+          </div>
+        </div>
+      </div>
+
+      <p>Ben Lynn wrote the original PBC library and documentation
+      and is still maintaining and developing it.</p>
+
+      <p>Hovav Shacham wrote the multiexponentiation, sliding
+      windows and preprocessed exponentiation routines, Makefile
+      improvements, and other enhancements. He also helps
+      administer the mailing list.</p>
+
+      <p>Joseph Cooley wrote the GNU build system files, tested the
+      library on Mac OS X, and added miscellaneous improvements.
+      Among other things, pairings can be read from memory buffer
+      and most compile-time warnings were removed.</p>
+
+      <p>Rob Figueiredo and Roger Khazan wrote changes which allow
+      the PBC library to be compiled on Windows (via mingw).</p>
+
+      <p>Dmitry Kosolapov sent in manual corrections, and wrote
+      several cryptosystem demos.</p>
+
+      <p>John Bethencourt sent in many helpful patches, e.g. fixes
+      that allow PBC to work on 64-bit platforms.</p>
+
+      <p>Paul Miller reported bugs, manual corrections and also
+      wrote the Gentoo portage overlay for PBC.</p>
+
+      <p>If you’re not mentioned here but should be, please let me
+      know! (blynn at cs dot stanford dot edu).</p>
+    </div>
+  </div>
+</body>
+</html>

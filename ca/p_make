@@ -1,0 +1,8 @@
+#!/usr/local/bin/bash
+
+gmake clean
+gmake setup
+gmake
+
+echo "Making pbgp library: ar cr libpbgp.a *.o"
+ar cr libpbgp.a *.o

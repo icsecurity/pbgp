@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="84">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df name="pbgpd_d" root=".">
+      <df name="bgpctl">
+        <in>bgpctl.c</in>
+        <in>irr_asset.c</in>
+        <in>irr_output.c</in>
+        <in>irr_parser.c</in>
+        <in>irr_prefix.c</in>
+        <in>irrfilter.c</in>
+        <in>irrfilter.h</in>
+        <in>parser.c</in>
+        <in>parser.h</in>
+        <in>whois.c</in>
+      </df>
+      <df name="bgpd">
+        <in>bgpd.c</in>
+        <in>bgpd.h</in>
+        <in>buffer.c</in>
+        <in>carp.c</in>
+        <in>config.c</in>
+        <in>control.c</in>
+        <in>imsg.c</in>
+        <in>imsg.h</in>
+        <in>kroute.c</in>
+        <in>log.c</in>
+        <in>log.h</in>
+        <in>mrt.c</in>
+        <in>mrt.h</in>
+        <in>name2id.c</in>
+        <in>parse.c</in>
+        <in>pbgpd.c</in>
+        <in>pbgpd.h</in>
+        <in>pfkey.c</in>
+        <in>pftable.c</in>
+        <in>printconf.c</in>
+        <in>rde.c</in>
+        <in>rde.h</in>
+        <in>rde_attr.c</in>
+        <in>rde_decide.c</in>
+        <in>rde_filter.c</in>
+        <in>rde_prefix.c</in>
+        <in>rde_rib.c</in>
+        <in>rde_update.c</in>
+        <in>session.c</in>
+        <in>session.h</in>
+        <in>timer.c</in>
+        <in>util.c</in>
+      </df>
+      <df name="ca">
+        <in>main.c</in>
+      </df>
+      <df name="doc">
+        <df name="bgpd_diff">
+          <in>__bgpd.h</in>
+          <in>__session.c</in>
+          <in>__session.h</in>
+          <in>sec_ext.c</in>
+          <in>sec_ext.h</in>
+          <in>sec_ext_timestamp.c</in>
+          <in>sec_ext_timestamp.h</in>
+          <in>sec_ext_utils.c</in>
+          <in>sec_ext_utils.h</in>
+        </df>
+      </df>
+      <df name="plain_bgpd">
+        <in>bgpd.c</in>
+        <in>bgpd.h</in>
+        <in>buffer.c</in>
+        <in>carp.c</in>
+        <in>config.c</in>
+        <in>control.c</in>
+        <in>imsg.c</in>
+        <in>imsg.h</in>
+        <in>kroute.c</in>
+        <in>log.c</in>
+        <in>log.h</in>
+        <in>mrt.c</in>
+        <in>mrt.h</in>
+        <in>name2id.c</in>
+        <in>parse.c</in>
+        <in>pbgpd.c</in>
+        <in>pbgpd.h</in>
+        <in>pfkey.c</in>
+        <in>pftable.c</in>
+        <in>printconf.c</in>
+        <in>rde.c</in>
+        <in>rde.h</in>
+        <in>rde_attr.c</in>
+        <in>rde_decide.c</in>
+        <in>rde_filter.c</in>
+        <in>rde_prefix.c</in>
+        <in>rde_rib.c</in>
+        <in>rde_update.c</in>
+        <in>session.c</in>
+        <in>session.h</in>
+        <in>timer.c</in>
+        <in>util.c</in>
+      </df>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>bgpd/Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>bgpd/Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>GNU|GNU</compilerSet>
+      </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>bgpd</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+          <cTool>
+            <incDir>
+              <pElem>/usr/local/include</pElem>
+              <pElem>/usr/local/include/pbgp</pElem>
+              <pElem>/usr/local/include/pbc</pElem>
+              <pElem>/usr/include</pElem>
+            </incDir>
+          </cTool>
+        </makeTool>
+      </makefileType>
+    </conf>
+  </confs>
+</configurationDescriptor>

@@ -1,0 +1,25 @@
+
+- Le funzioni di librerie non devono in nessun caso eseguire pbgp_die ma soltanto pbgp_error
+      pbgp_setup:
+      - durante il setup la CA deve generare una chiave ibe, questa chiave deve essere
+        utilizzata per firmare il rilascio di un prefisso ad un AS
+      - scrivere main definitivo con opzioni da riga di comando
+
+      pbgp_actions:
+      - completare opzioni da riga di comando
+      - scrivere help comando
+      - gestire join e revoke dello stesso id nella stessa epoca rimuovendo l'id
+        dalla lista degli id attivi (?)
+
+      pbgp_common:
+      - revocation_check(): implementare verifica firma associazione id,g_id
+
+      pbgp_epoch:
+      - fix new epoch: implementare gestione accurata degli errori (es: quando non si
+        hanno i permessi per scrivere/leggere i file)
+
+- Commentare prototipi funzioni!
+
+- Rivedere nomi funzioni
+
+- Scrivere README 

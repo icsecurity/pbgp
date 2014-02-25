@@ -1,0 +1,279 @@
+Index: tests/check_epoch.c
+===================================================================
+--- tests/check_epoch.c	(revision 130)
++++ tests/check_epoch.c	(working copy)
+@@ -153,9 +153,9 @@
+     fail_if(client_asnum != asnum, "pbgp_join_load :: asnum don't match");
+ 
+     // compute serialized = (asnum + witness) to check rsa signature on them
+-    unsigned char serialized[sizeof asnum + element_length_in_bytes(client_witness)];
++    unsigned char serialized[sizeof asnum + element_length_in_bytes_compressed(client_witness)];
+     memcpy(serialized, &client_asnum, sizeof client_asnum);
+-    element_to_bytes(serialized + sizeof client_asnum, client_witness);
++    element_to_bytes_compressed(serialized + sizeof client_asnum, client_witness);
+ 
+     // verify envelope signature on serialized(asnum, witness)
+     int ret = pbgp_rsa_verify(client_setup->rsa_evp, serialized, sizeof serialized,
+@@ -334,12 +334,12 @@
+     pbgp_store_put_element(store_cidr_out, STORE_KEY_SET_TYPE(key, JOIN, JOIN_WITNESS), client_witness);
+ 
+     // verify epoch signatures on accumulator
+-    unsigned char accbuf[element_length_in_bytes(epoch->accumulator)];
++    unsigned char accbuf[element_length_in_bytes_compressed(epoch->accumulator)];
+ 
+     memset(accbuf, 0, sizeof (accbuf));
+-    hsize = element_to_bytes(accbuf, epoch->accumulator);
++    hsize = element_to_bytes_compressed(accbuf, epoch->accumulator);
+ 
+-    verified = pbgp_rsa_verify(client_setup->rsa_evp, accbuf, element_length_in_bytes(epoch->accumulator),
++    verified = pbgp_rsa_verify(client_setup->rsa_evp, accbuf, element_length_in_bytes_compressed(epoch->accumulator),
+                                    epoch->signature_accumulator, epoch->signature_accumulator_len);
+     fail_if (verified != 1, "pbgp_rsa_verify :: accumulator");
+ 
+Index: tests/check_ibe.c
+===================================================================
+--- tests/check_ibe.c	(revision 130)
++++ tests/check_ibe.c	(working copy)
+@@ -19,6 +19,8 @@
+   pbgp_ibe_keypair_init(setup, &ibe_keypair);
+   pbgp_ibe_keypair_gen(setup, signer_id, ibe_keypair);
+ 
++  printf ("key len: %d\n", element_length_in_bytes_compressed(ibe_keypair->priv0));
++
+   // sign message
+   pbgp_ibe_sign(setup, ibe_keypair, (const unsigned char *) msg, mlen, signature);
+ 
+@@ -51,6 +53,12 @@
+     signature = __sign(i, setup, store, signature);
+   }
+ 
++  printf ("sign len: %d %d %d\n",
++          element_length_in_bytes_compressed(signature->u),
++          element_length_in_bytes_compressed(signature->v),
++          element_length_in_bytes_compressed(signature->w));
++
++
+   // Success
+   ret = pbgp_ibe_verify(setup, signature, store);
+   fail_if (ret != 0, "pbgp_ibe_verify (3): fail");
+@@ -68,13 +76,13 @@
+   element_t e;
+   element_init_G1(e, setup->pairing);
+ 
+-  element_from_bytes(e, buf);
++  element_from_bytes_compressed(e, buf);
+   fail_if(element_cmp(e, signature->u), "pbgp_ibe_signature_serialize :: error");
+ 
+-  element_from_bytes(e, buf + element_length_in_bytes(signature->u));
++  element_from_bytes_compressed(e, buf + element_length_in_bytes_compressed(signature->u));
+   fail_if(element_cmp(e, signature->v), "pbgp_ibe_signature_serialize :: error");
+ 
+-  element_from_bytes(e, buf + element_length_in_bytes(signature->u) + element_length_in_bytes(signature->v));
++  element_from_bytes_compressed(e, buf + element_length_in_bytes_compressed(signature->u) + element_length_in_bytes_compressed(signature->v));
+   fail_if(element_cmp(e, signature->w), "pbgp_ibe_signature_serialize :: error");
+ 
+   // test save and load keypair
+Index: includes/pbgp_store.h
+===================================================================
+--- includes/pbgp_store.h	(revision 130)
++++ includes/pbgp_store.h	(working copy)
+@@ -91,5 +91,11 @@
+ int
+ pbgp_store_get_element(store_t *store, store_key_t *key, element_t *e);
+ 
++void
++pbgp_store_put_element_u(store_t *store, store_key_t *key, element_t e);
++
++int
++pbgp_store_get_element_u(store_t *store, store_key_t *key, element_t *e);
++
+ #endif
+ 
+Index: src/pbgp_epoch.c
+===================================================================
+--- src/pbgp_epoch.c	(revision 130)
++++ src/pbgp_epoch.c	(working copy)
+@@ -62,7 +62,7 @@
+         break;
+       case EPOCH_ACCUMULATOR:
+         // allocated in epoch_init()
+-        element_from_bytes(epoch->accumulator, data);
++        element_from_bytes_compressed(epoch->accumulator, data);
+         break;
+       case EPOCH_ADDED:
+         if (store_added) {
+@@ -164,10 +164,10 @@
+   epoch->signature_revoked_len = pbgp_rsa_sign(setup->rsa_evp, hash, hsize, &epoch->signature_revoked);
+ 
+   // Get accumulator buffer
+-  unsigned char accbuf[element_length_in_bytes(epoch->accumulator)];
++  unsigned char accbuf[element_length_in_bytes_compressed(epoch->accumulator)];
+ 
+   memset (accbuf, 0, sizeof (accbuf));
+-  hsize = element_to_bytes(accbuf, epoch->accumulator);
++  hsize = element_to_bytes_compressed(accbuf, epoch->accumulator);
+ 
+   // Sign accumulator value (automatically (m)allocate signature)
+   epoch->signature_accumulator_len = pbgp_rsa_sign(setup->rsa_evp, accbuf, hsize, &epoch->signature_accumulator);
+Index: src/pbgp_ibe.c
+===================================================================
+--- src/pbgp_ibe.c	(revision 130)
++++ src/pbgp_ibe.c	(working copy)
+@@ -38,9 +38,9 @@
+ size_t
+ pbgp_ibe_serialized_signature_size(ibe_signature_t *signature)
+ {
+-  return (size_t) element_length_in_bytes(signature->u) +
+-         element_length_in_bytes(signature->w) +
+-         element_length_in_bytes(signature->v);
++  return (size_t) element_length_in_bytes_compressed(signature->u) +
++         element_length_in_bytes_compressed(signature->w) +
++         element_length_in_bytes_compressed(signature->v);
+ }
+ 
+ /**
+@@ -51,11 +51,11 @@
+ pbgp_ibe_signature_serialize(ibe_signature_t *signature, unsigned char *buf)
+ {
+   // Ugly as we recalculate size but still faster than malloc
+-  int u_len = element_length_in_bytes(signature->u),
+-      v_len = element_length_in_bytes(signature->v);
+-  element_to_bytes(buf, signature->u);
+-  element_to_bytes(buf + u_len, signature->v);
+-  element_to_bytes(buf + u_len + v_len, signature->w);
++  int u_len = element_length_in_bytes_compressed(signature->u),
++      v_len = element_length_in_bytes_compressed(signature->v);
++  element_to_bytes_compressed(buf, signature->u);
++  element_to_bytes_compressed(buf + u_len, signature->v);
++  element_to_bytes_compressed(buf + u_len + v_len, signature->w);
+   return buf;
+ }
+ 
+@@ -63,9 +63,9 @@
+ pbgp_ibe_signature_unserialize(unsigned char *buf, ibe_signature_t *signature)
+ {
+   int len = 0;
+-  len += element_from_bytes(signature->u, buf + len);
+-  len += element_from_bytes(signature->v, buf + len);
+-  len += element_from_bytes(signature->w, buf + len);
++  len += element_from_bytes_compressed(signature->u, buf + len);
++  len += element_from_bytes_compressed(signature->v, buf + len);
++  len += element_from_bytes_compressed(signature->w, buf + len);
+   return len;
+ }
+ 
+Index: src/pbgp_actions.c
+===================================================================
+--- src/pbgp_actions.c	(revision 130)
++++ src/pbgp_actions.c	(working copy)
+@@ -212,9 +212,9 @@
+   unsigned char envelope_signature[EVP_PKEY_size(setup->rsa_evp)];
+   memset(&envelope_signature, 0, sizeof envelope_signature);
+ 
+-  unsigned char buf[sizeof asnum + element_length_in_bytes(witness)];
++  unsigned char buf[sizeof asnum + element_length_in_bytes_compressed(witness)];
+   memcpy(buf, &asnum, sizeof asnum);
+-  element_to_bytes(buf + sizeof asnum, witness);
++  element_to_bytes_compressed(buf + sizeof asnum, witness);
+ 
+   size_t ssize = pbgp_rsa_usign(setup->rsa_evp, buf, sizeof buf, envelope_signature);
+ 
+Index: src/pbgp_setup.c
+===================================================================
+--- src/pbgp_setup.c	(revision 130)
++++ src/pbgp_setup.c	(working copy)
+@@ -59,7 +59,7 @@
+   store_key_t key = STORE_KEY_INIT;
+   pbgp_store_put_element(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_G), setup->g);
+   pbgp_store_put_element(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_IBEPUB), setup->ibePub);
+-  pbgp_store_put_element(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_Z), setup->z);
++  pbgp_store_put_element_u(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_Z), setup->z);
+   pbgp_store_put(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_N), (unsigned char *) &(setup->n), sizeof (setup->n));
+   char *pem_pk = pbgp_rsa_get_pk_pem(setup->rsa_evp);
+   pbgp_store_put(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_RSA_PK), pem_pk, strlen(pem_pk) + 1);
+@@ -81,7 +81,7 @@
+ 
+   pbgp_store_get_element(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_G), &setup->g);
+   pbgp_store_get_element(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_IBEPUB), &setup->ibePub);
+-  pbgp_store_get_element(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_Z), &setup->z);
++  pbgp_store_get_element_u(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_Z), &setup->z);
+ 
+   size_t size = sizeof (setup->n);
+   pbgp_store_uget(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_N), (unsigned char *) &setup->n, &size);
+@@ -107,8 +107,8 @@
+ pbgp_setup_save_privkey(setup_params_t *setup, store_t *store)
+ {
+   store_key_t key = STORE_KEY_INIT;
+-  pbgp_store_put_element(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_GAMMA), setup->gamma);
+-  pbgp_store_put_element(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_GAMMAPOW_NP1), setup->gammapow_np1);
++  pbgp_store_put_element_u(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_GAMMA), setup->gamma);
++  pbgp_store_put_element_u(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_GAMMAPOW_NP1), setup->gammapow_np1);
+   char *pem_sk = pbgp_rsa_get_sk_pem(setup->rsa_evp);
+   pbgp_store_put(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_RSA_SK), pem_sk, strlen(pem_sk) + 1);
+ }
+@@ -120,8 +120,8 @@
+ pbgp_setup_load_privkey(setup_params_t *setup, store_t *store)
+ {
+   store_key_t key = STORE_KEY_INIT;
+-  pbgp_store_get_element(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_GAMMA), &setup->gamma);
+-  pbgp_store_get_element(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_GAMMAPOW_NP1), &setup->gammapow_np1);
++  pbgp_store_get_element_u(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_GAMMA), &setup->gamma);
++  pbgp_store_get_element_u(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_GAMMAPOW_NP1), &setup->gammapow_np1);
+ 
+   size_t size = 0;
+   pbgp_store_uget_size(store, STORE_KEY_SET_TYPE(key, SETUP, SETUP_RSA_SK), &size);
+Index: src/pbgp_store.c
+===================================================================
+--- src/pbgp_store.c	(revision 130)
++++ src/pbgp_store.c	(working copy)
+@@ -352,6 +352,36 @@
+ void
+ pbgp_store_put_element(store_t *store, store_key_t *key, element_t e)
+ {
++  int len = element_length_in_bytes_compressed(e);
++  unsigned char buf[len];
++  memset(buf, 0, sizeof (buf));
++  element_to_bytes_compressed(buf, e);
++  pbgp_store_put(store, key, buf, len);
++}
++
++/**
++ *  Get an element from the database and store it in param e.
++ *
++ *  @param e        must be allocatend and freed by the caller
++ *  @return         number of bytes read
++ */
++int
++pbgp_store_get_element(store_t *store, store_key_t *key, element_t *e)
++{
++  size_t size = 0;
++  int ret = pbgp_store_uget_size(store, key, &size);
++  if (ret == 0) {
++    unsigned char buf[size];
++    memset (buf, 0, size);
++    pbgp_store_uget(store, key, buf, &size);
++    ret = element_from_bytes_compressed(*e, buf);
++  }
++  return ret;
++}
++
++void
++pbgp_store_put_element_u(store_t *store, store_key_t *key, element_t e)
++{
+   int len = element_length_in_bytes(e);
+   unsigned char buf[len];
+   memset(buf, 0, sizeof (buf));
+@@ -366,7 +396,7 @@
+  *  @return         number of bytes read
+  */
+ int
+-pbgp_store_get_element(store_t *store, store_key_t *key, element_t *e)
++pbgp_store_get_element_u(store_t *store, store_key_t *key, element_t *e)
+ {
+   size_t size = 0;
+   int ret = pbgp_store_uget_size(store, key, &size);
+@@ -378,3 +408,4 @@
+   }
+   return ret;
+ }
++

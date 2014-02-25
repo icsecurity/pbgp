@@ -1,0 +1,304 @@
+Howto load a full internet routing table into a testlab Written by
+Administrator Sunday, 13 September 2009 
+
+I came across a excellent posting on
+evilrouters.net how to setup a full routing table to use with dynamips.  So
+the credits for how to set this up, go the owner of evilrouters.net.  In my
+case I wanted to use a Mac Powerbook G4 to provide the full routing table to
+my testlab, which consists of real Cisco routers.
+
+So I started to following the instructions, and installing on OS X 10.5 is a breeze.
+
+First I needed some additional packages to keep CPAN happy. I didn't had
+ncftp, lynxgpg, wget. Which I installed. Just search on google, and you should find it.
+
+After CPAN was happy, I did the following:
+
+
+perl -MCPAN -e shell
+cpan[1]> install Net::BGP
+
+This should end with: install OK
+
+ After this, cpan can be closed. by typing exit.
+
+Next is to install libbgpdump.
+If you don't have wget installed, use curl like:
+
+curl http://www.ris.ripe.net/source/libbgpdump-1.4.99.9.tar.gz > libbgpdump-1.4.99.9.tar.gz
+
+In case wget is installed:
+wget http://www.ris.ripe.net/source/libbgpdump-1.4.99.9.tar.gz
+
+After the file is downloaded, untar the file:
+
+tar zxf libbgpdump-1.4.99.9.tar.gz
+
+Change to the directory created by the tarball:
+
+cd libbgpdump-1.4.99.9/
+
+Basically do the following to compile :
+
+./configure --disable-ipv6
+make
+
+cp bgpdump /usr/local/bin
+
+mkdir ../bgp
+cd ../bgp
+
+
+Now it's time to get some routes to inject. The routes made available by
+RIPE.  You can fetch them from the RIS RAW Data page :
+
+
+I picked this file :
+
+
+by using :
+
+wget http://data.ris.ripe.net/rrc00/2009.09/bview.20090901.0759.gz
+
+Now we need to convert it to a file format bgpsimple understands.  Luckily
+the conversion is simple.
+
+Under OS X zcat lookes standard for a file ending with .Z extension. So the
+easiest and laziest way is to move to file :
+
+mv bview.20090901.0759.gz bview.20090901.0759.gz.Z
+
+Now convert :
+
+zcat bview.20090820.2359.gz | bgpdump -m - > myroutes
+
+
+The last step is to download bgpsimple.
+
+
+use wget or curl :
+
+With curl:
+
+curl http://bgpsimple.googlecode.com/files/bgp_simple.tgz > bgp_simple.tgz
+
+
+with wget :
+wget http://bgpsimple.googlecode.com/files/bgp_simple.tgz
+
+Unpack the tar file :
+
+tar xzvf bgp_simple.tgz
+
+You should have bgpsimple and a Readme file.
+
+
+Next I configured  Cisco 3620, this router has 40Mb of RAM :
+
+
+!
+interface Ethernet0/1.26
+ encapsulation dot1Q 26
+ ip address 10.66.6.1 255.255.255.0
+ no cdp enable
+!
+
+
+Next I configured BGP :
+
+!
+router bgp 65000
+ no synchronization
+ bgp log-neighbor-changes
+ neighbor 10.66.6.2 remote-as 65000
+ neighbor 192.168.1.8 remote-as 65000
+ no auto-summary
+!
+
+
+Next on the powerbook I went to system preferences, Network.  Where I
+configured a vlan with a valn tag of 26 ( Klick on the gear and choose
+Manage Virtual interfaces) After creating the vlan interface klick done, and
+don't forget to klick on apply.
+
+The vlan interface should popup, ready for a ip address ;-)
+
+I configured 10.6.66.1/24 on the cisco router, and 10.66.6.2
+on the Mac Powerbook.
+
+And of course I had to configure vlan 26 on my main switch in the testlab,
+but a cross cable will do the trick also.
+
+A simple test if both systems can reach each other:
+
+First check if the vlan interface on OS X is ready and proper configured:
+
+sh-3.2# ifconfig vlan3
+vlan3: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+        inet6 fe80::20a:95ff:fe88:366c%vlan3 prefixlen 64 scopeid 0xa
+        inet 10.66.6.2 netmask 0xffffff00 broadcast 10.66.6.255
+        ether 00:0a:95:88:36:6c
+        media: autoselect (100baseTX <full-duplex>) status: active
+        supported media: autoselect
+        vlan: 26 parent interface: en0
+
+After that, a simple ping to the cisco router:
+
+sh-3.2# ping -c 5 10.66.6.1
+PING 10.66.6.1 (10.66.6.1): 56 data bytes
+64 bytes from 10.66.6.1: icmp_seq=0 ttl=255 time=2.141 ms
+64 bytes from 10.66.6.1: icmp_seq=1 ttl=255 time=2.326 ms
+64 bytes from 10.66.6.1: icmp_seq=2 ttl=255 time=2.252 ms
+64 bytes from 10.66.6.1: icmp_seq=3 ttl=255 time=2.195 ms
+64 bytes from 10.66.6.1: icmp_seq=4 ttl=255 time=2.219 ms
+
+
+Now it's time to become a administrator on the Mac, and start injecting
+routes.  I like to stress test the C3620.  Since it has only 40Mb of RAM, a
+full routing table will make the BGP process come to a halt.  The BGP
+session will just die due to a short of memory.  So I started to inject a
+5000 routes:
+
+To run as "root" I did a sudo sh and provided my administrators password.
+
+After that I ran :
+
+./bgp_simple.pl -myas 65000 -myip 10.66.6.2   -peerip 10.66.6.1 -peeras 65000 -p myroutes -m 5000 -n
+
+
+This lookes like:
+
+sh-3.2# ./bgp_simple.pl -myas 65000 -myip 10.66.6.2   -peerip 10.66.6.1 -peeras 65000 -p myroutes -m 5000 -n
+---------------------------------------- CONFIG SUMMARY --------------------------------------------------
+Configured for an iBGP session between me (ASN65000, 10.66.6.2) and peer (ASN65000, 10.66.6.1).
+Will use prefixes from file myroutes.
+Maximum number of prefixes to be advertised: 5000.
+Will spoof next hop address to 10.66.6.2.
+----------------------------------------------------------------------------------------------------------
+Sending full update.
+Send Update: prfx [1.1.1.0/24] aspath [25152 6939 3303 8300] locprf [0] comm [25152:5] orig [IGP] nxthp [10.66.6.2]
+Send Update: prfx [3.0.0.0/8] aspath [25152 6939 15412 9304 80] locprf [0] comm [25152:5] orig [IGP] nxthp [10.66.6.2]
+Send Update: prfx [3.51.92.0/23] aspath [25152 23148 7018] locprf [0] comm [25152:5] orig [INCOMPLETE] nxthp [10.66.6.2]
+Send Update: prfx [4.0.0.0/8] aspath [25152 1273 3356] locprf [0] comm [25152:5] orig [IGP] agg [3356 4.69.130.22] atom [1] nxthp [10.66.6.2]
+Send Update: prfx [4.0.0.0/9] aspath [25152 1273 3356] locprf [0] comm [25152:5] orig [IGP] agg [3356 4.69.130.22] atom [1] nxthp [10.66.6.2]
+Send Update: prfx [4.21.103.0/24] aspath [25152 6939 3549 46133] locprf [0] comm [25152:5] orig [IGP] nxthp [10.66.6.2]
+Send Update: prfx [4.23.88.0/23] aspath [25152 23148 7018 46164] locprf [0] comm [25152:5] orig [IGP] nxthp [10.66.6.2]
+Send Update: prfx [4.23.88.0/24] aspath [25152 23148 7018 46164] locprf [0] comm [25152:5] orig [IGP] nxthp [10.66.6.2]
+Send Update: prfx [4.23.89.0/24] aspath [25152 23148 7018 46164] locprf [0] comm [25152:5] orig [IGP] nxthp [10.66.6.2]
+Send Update: prfx [4.23.92.0/22] aspath [25152 23148 7018 46164] locprf [0] comm [25152:5] orig [IGP] nxthp [10.66.6.2]
+Full update sent.
+
+
+And on the Cisco 3630:
+
+
+rt-tl-mcr-200#sh ip bgp summary
+BGP router identifier 192.168.66.1, local AS number 65000
+BGP table version is 25007, main routing table version 25007
+4993 network entries using 484321 bytes of memory
+4993 path entries using 179748 bytes of memory
+1698 BGP path attribute entries using 102300 bytes of memory
+1595 BGP AS-PATH entries using 40016 bytes of memory
+1 BGP community entries using 24 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 806409 total bytes of memory
+BGP activity 41747/36754 prefixes, 41767/36772 paths, scan interval 60 secs
+
+Neighbor        V    AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.66.6.2       4 65000   41919     139    25007    0    0 00:00:21     4993
+192.168.1.8     4 65000       0       0        0    0    0 never    Active
+
+When using a show ip bgp the output is like (only showing the first entries):
+
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal
+Origin codes: i - IGP, e - EGP, ? - incomplete
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*>i1.1.1.0/24       10.66.6.2                       0      0 25152 6939 3303 8300 i
+*>i3.0.0.0          10.66.6.2                       0      0 25152 6939 15412 9304 80 i
+*>i3.51.92.0/23     10.66.6.2                       0      0 25152 23148 7018 ?
+*>i4.0.0.0/9        10.66.6.2                       0      0 25152 1273 3356 i
+*>i4.0.0.0          10.66.6.2                       0      0 25152 1273 3356 i
+*>i4.21.103.0/24    10.66.6.2                       0      0 25152 6939 3549 46133 i
+*>i4.23.88.0/24     10.66.6.2                       0      0 25152 23148 7018 46164 i
+*>i4.23.88.0/23     10.66.6.2                       0      0 25152 23148 7018 46164 i
+*>i4.23.89.0/24     10.66.6.2                       0      0 25152 23148 7018 46164 i
+*>i4.23.92.0/23     10.66.6.2                       0      0 25152 23148 7018 46164 i
+*>i4.23.92.0/22     10.66.6.2                       0      0 25152 23148 7018 46164 i
+
+
+
+ When I increased the number of routers,the bgp session died, and bgpsimple
+doesn't like that.  As you can read on the evilrouters blog, it is possible
+to adjust the timers.  Juast visit the article on evilrouters.net and read
+the section.
+
+I just added after line 220:
+
+
+
+   KeepAliveTime           => 600,
+   HoldTime                => 1800,
+
+
+ And conigured the BGP timers:
+
+ rt-tl-mcr-200#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+rt-tl-mcr-200(config)#router bgp 65000
+rt-tl-mcr-200(config-router)#timers bgp 600 1800
+rt-tl-mcr-200(config-router)#end
+rt-tl-mcr-200#
+
+rt-tl-mcr-200#sh run | begin router bgp 65000
+router bgp 65000
+ no synchronization
+ bgp log-neighbor-changes
+ timers bgp 600 1800
+ neighbor 10.66.6.2 remote-as 65000
+ neighbor 192.168.1.8 remote-as 65000
+ no auto-summary
+!
+
+
+
+After the adjustment :I tried to load all the routes into the C3620, which
+can hanlde 13110 number of routes with 40Mb of RAM:
+
+rt-tl-mcr-200#sh ip bgp summary
+BGP router identifier 192.168.66.1, local AS number 65000
+BGP table version is 43117, main routing table version 43117
+13110 network entries using 1271670 bytes of memory
+13110 path entries using 471960 bytes of memory
+3438 BGP path attribute entries using 206700 bytes of memory
+3064 BGP AS-PATH entries using 78632 bytes of memory
+1 BGP community entries using 24 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 2028986 total bytes of memory
+BGP activity 54857/41747 prefixes, 54877/41765 paths, scan interval 60 secs
+
+Neighbor        V    AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.66.6.2       4 65000   55061     167    41746    0    0 00:00:44    13110
+192.168.1.8     4 65000       0       0        0    0    0 never    Active
+
+
+
+The console output:
+
+1d00h: %BGP-5-ADJCHANGE: neighbor 10.66.6.2 Up
+1d00h: %SYS-2-MALLOCFAIL: Memory allocation of 65536 bytes failed from 0x604033
+Pool: Processor  Free: 17396  Cause: Not enough free memory
+Alternate Pool: None  Free: 0  Cause: No Alternate pool
+
+-Process= "BGP Router", ipl= 0, pid= 59
+-Traceback= 60407970 60409FCC 60403390 6053F870 605413F4 606F79AC 606F8458 60B64
+1d00h: %BGP-5-ADJCHANGE: neighbor 10.66.6.2 Down No memory
+1d00h: %BGP-3-NOTIFICATION: sent to neighbor 10.66.6.2 3/1 (update malformed) 00
+
+
+
+The setup just works fine, and I  Now have a laptop which I can carry
+around, to be used in any bgp test lab, and play around with some very large
+routing tables.

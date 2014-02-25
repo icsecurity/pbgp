@@ -1,0 +1,125 @@
+$ bgpctl show rib # aspath
+$ bgpctl netword add 10.0.2.0/24
+$ bgpctl show fib connected static
+$ bgpctl show summary
+$ bgpctl show neighbor 192.1.1.1
+$ bgpctl show nex
+
+--
+
+ -d          Do not daemonize.  If this option is specified, bgpd will run
+                 in the foreground and log to stderr.
+
+ -v          Produce more verbose output.
+
+--
+
+OpenBGPD is split into three processes. The parent process, the Session Engine
+(SE), and the Route Decision Engine (RDE). Both SE and RDE run in a chroot jail
+and drop privileges on startup. Only the parent process runs with root
+privileges -- this is necessary to update the routing table.
+
+bgpd(8) and ospfd(8) are used on routers so the first thing you need to do is to
+edit /etc/sysctl.conf and enable IP forwarding by uncommenting the
+"net.inet.ip.forwarding=1" line.
+
+==
+
+fib = Forwarding Information Base a.k.a. the kernel routing table
+
+For each peer-to-peer session:
+  Idle; Connect; Active; OpenSent; OpenConfirm; and Established
+
+****** OPENBSD PATCH *********
+
+  - CFLAGS="-ftrampolines" CPPFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib/db4 -L/usr/local/lib" ./configure
+
+  - eliminare execinfo in check_main (per i test)
+
+  - export PKG_PATH=ftp://ftp2.eu.openbsd.org/pub/OpenBSD/5.1/packages/`machine -a`/
+
+  - pkg_add e2fsprogs (libuuid)
+
+  - AUTOCONF_VERSION=2.65 AUTOMAKE_VERSION=1.11 ./autogen.sh
+
+
+******* BGP RFC **************
+
+Max dim(OPEN) = 270 bytes ca. (quindi si possono infilare i dati alla fine del pacchetto !)
+Max dim(UPDATE) =
+
+The value of the Length field MUST always be at least
+  19 and no greater than 4096, and MAY be further constrained,
+  depending on the message type.  "padding" of extra data after the message is not allowed.
+
+The maximum message size is 4096
+   octets.  All implementations are required to support this maximum message size.
+
+If the OPEN message is acceptable, a
+  KEEPALIVE message confirming the OPEN is sent back.
+
+
+      +-----------------------------------------------------+
+      |   Withdrawn Routes Length (2 octets)                |
+      +-----------------------------------------------------+
+      |   Withdrawn Routes (variable)                       |
+      +-----------------------------------------------------+
+      |   Total Path Attribute Length (2 octets)            |  --> PATH ATTRIBUTES LENGTH
+      +-----------------------------------------------------+
+      |   Path Attributes (variable)                        |  --> LISTA di [ <attribute type, attribute length, attribute value> ...]
+      +-----------------------------------------------------+
+      |   Network Layer Reachability Information (variable) |  --> PREFIXES
+      +-----------------------------------------------------+
+
+PATH ATTRIBUTES:
+
+  [ Attribute type,                    Attribute length,             Attribute value ]
+      |                                     |
+      |                                     |
+  [ Attr. Flags  | Attr. Type Code ]     [ 1 o 2 BYTE (EXT) ]
+      |                      |
+      |                      |
+ [EXT, OPT, TRANS..]    [ORIGIN, AS_PATH, ...]
+
+AS_PATH (Attribute value):
+
+  [ Path segment type,                 Path segment length,        Path segment value ]
+       |                                         |                              |
+       |                                         |                              |
+  [ AS_SET, AS_SEQUENCE ]                  [ 1 BYTE NUMBER OF AS(s) ]      [ 2 BYTE PER OGNI ASNUM ]
+
+
+NLRI LENGTH = UPDATE message Length - 23 - Total Path Attributes Length - Withdrawn Routes Length
+
+NLRI = [ 1 BYTE length, variable prefix ]
+
+1 solo ASPATH per pacchetto
+
+--
+
+All errors detected while processing the OPEN message MUST be
+   indicated by sending the NOTIFICATION message with the Error Code
+   OPEN Message Error.
+
+All errors detected while processing the UPDATE message MUST be
+   indicated by sending the NOTIFICATION message with the Error Code
+   UPDATE Message Error.
+
+
+__APPUNTI BGPD__
+
+  RECV: bgp_fsm(EVNT_RCVD_UPDATE) -> parse_update() -> rde_dispatch_imsg_session(IMSG_UPDATE)
+    -> rde_update_dispatch -> rde_attr_parse -> (popola aspath) -> rde_update_update -> free(asp)
+
+    NB: bgp_fsm(EVNT_RCVD_UPDATE) -> deve verificare __prima__ di inviare all'rde
+      (quindi teoricamente ancora prima di parse_update o comunque al suo interno)
+      ed evitare, se fallisce la verifica. in ogni caso non si determina un cambiamento
+      di stato (ma l'rde deve rifiutare il pacchetto -> potrei metterla dentro
+    rde_attr_parse() la verifica, prima di rde_update_update() o direttamente in rde_update_update())
+
+    -> forse rde_update_update() è il metodo migliore per applicare la verifica dell'aspath !
+        (ma come gli faccio arrivare i timestamp e la firma ?)
+
+  SEND: session_dispatch_imsg(IMSG_UPDATE) (ie. bgpctl)
+    -> session_update() -> { send signed update msg }
+

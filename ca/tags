@@ -1,0 +1,281 @@
+	pbgp_code.vim	/^imap <buffer>  <Plug>NetrwHideEdit$/;"	m
+	pbgp_code.vim	/^nmap <buffer>  <Plug>NetrwHideEdit$/;"	m
+	pbgp_code.vim	/^imap <buffer>  <Plug>NetrwRefresh$/;"	m
+	pbgp_code.vim	/^nmap <buffer>  <Plug>NetrwRefresh$/;"	m
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+0	pbgp_code.vim	/^normal! 0$/;"	m
+020l	pbgp_code.vim	/^normal! 020l$/;"	m
+<F1>	pbgp_code.vim	/^nnoremap <buffer> <F1> :he netrw-quickhelp$/;"	m
+<Plug>(unite_source_outline_loop_cursor_down)	pbgp_code.vim	/^nmap <Plug>(unite_source_outline_loop_cursor_down) <Plug>(unite_skip_cursor_down)$/;"	m
+<Plug>(unite_source_outline_loop_cursor_up)	pbgp_code.vim	/^nmap <Plug>(unite_source_outline_loop_cursor_up) <Plug>(unite_skip_cursor_up)$/;"	m
+<Plug>NetrwBrowseX	pbgp_code.vim	/^nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)$/;"	m
+<S-Insert>	pbgp_code.vim	/^map <S-Insert> <MiddleMouse>$/;"	m
+<S-Insert>	pbgp_code.vim	/^map! <S-Insert> <MiddleMouse>$/;"	m
+ADDPREFIX	pbgp_actions.c	/^enum {JOIN,REVOKE,ADDPREFIX};$/;"	e	enum:__anon1	file:
+BUFSIZE	pbgp_common.h	9;"	d
+BUFSIZE	test.c	25;"	d	file:
+BUSY	pbgp.h	/^enum {FREE,BUSY};$/;"	e	enum:__anon2
+C	pbgp_code.vim	/^inoremap <buffer> <silent> C :let g:netrw_chgwin= winnr()$/;"	m
+C	pbgp_code.vim	/^nnoremap <buffer> <silent> C :let g:netrw_chgwin= winnr()$/;"	m
+CC	Makefile	/^CC=gcc$/;"	m
+CFLAGS	Makefile	/^	CFLAGS= -g -lpbc -lgmp -lnettle -lhogweed -Wall -O5$/;"	m
+CFLAGS	Makefile	/^	CFLAGS= -g -lpbc -lgmp -lnettle -lhogweed -lresolv -Wall -O5$/;"	m
+DESERIALIZE_ELEM	pbgp.h	36;"	d
+EPOCHTEST_MAIN	pbgp_epoch.c	267;"	d	file:
+ESIZE	pbgp.h	25;"	d
+FREE	pbgp.h	/^enum {FREE,BUSY};$/;"	e	enum:__anon2
+INCLUDES	Makefile	/^INCLUDES= -I . -I\/usr\/local\/include\/pbc\/ -I\/usr\/local\/include\/$/;"	m
+JOIN	pbgp_actions.c	/^enum {JOIN,REVOKE,ADDPREFIX};$/;"	e	enum:__anon1	file:
+KEYSIZE	pbgp.h	24;"	d
+KEYSIZE	test.c	21;"	d	file:
+LIBS	Makefile	/^LIBS= -L . -L \/usr\/local\/lib\/ -L \/usr\/lib\/ $/;"	m
+MAXASPATHLEN	test.c	13;"	d	file:
+MAXIDLEN	pbgp_common.h	10;"	d
+MAXIPLEN	pbgp_common.h	12;"	d
+MAXLONGLEN	pbgp_common.h	11;"	d
+MAXPFIXLEN	test.c	16;"	d	file:
+MAXPFIXNUM	test.c	15;"	d	file:
+MAX_ENVEL_NAME	pbgp.h	28;"	d
+MAX_ID_STR	pbgp.h	34;"	d
+MAX_LOAD_FSIZE	pbgp.h	26;"	d
+MAX_MSG_LEN	pbgp_common.h	7;"	d
+MAX_MSG_LEN	test.c	17;"	d	file:
+MAX_PFIX_LEN	pbgp.h	32;"	d
+MAX_PFIX_NUM	pbgp.h	30;"	d
+MAX_PF_TS_LEN	pbgp.h	33;"	d
+MAX_TS_LEN	pbgp.h	31;"	d
+MAX_VRFY_LEN	test.c	18;"	d	file:
+MSG_NUM	test.c	14;"	d	file:
+OPTIMIZE	Makefile	/^OPTIMIZE= -O3$/;"	m
+P	pbgp.h	/^      element_t *P;$/;"	m	struct:setup_params_s
+RANDOM_DEVICE	pbgp_common.h	8;"	d
+RANDOM_DEVICE	test.c	24;"	d	file:
+READ_ELEM	pbgp_ibe.c	25;"	d	file:
+REVOKE	pbgp_actions.c	/^enum {JOIN,REVOKE,ADDPREFIX};$/;"	e	enum:__anon1	file:
+SERIALIZE_AUTH	pbgp.h	47;"	d
+SERIALIZE_ELEM	pbgp.h	42;"	d
+SHA1_DIGEST_HEX	pbgp.h	27;"	d
+SIGN_INVALID	pbgp.h	/^enum {SIGN_VALID,SIGN_INVALID};$/;"	e	enum:__anon3
+SIGN_VALID	pbgp.h	/^enum {SIGN_VALID,SIGN_INVALID};$/;"	e	enum:__anon3
+SessionLoad	pbgp_code.vim	/^let SessionLoad = 1$/;"	v
+TIMING	pbgp_ibe.c	17;"	d	file:
+UNAME	Makefile	/^UNAME:= $(shell uname)$/;"	m
+WRITE_ELEM	pbgp_ibe.c	20;"	d	file:
+_H_PBGP	pbgp.h	2;"	d
+_H_PBGP_COMMON	pbgp_common.h	2;"	d
+acc	pbgp.h	/^      acc_t *acc;$/;"	m	struct:epoch_item_s
+acc_clear	pbgp_accumulator.c	/^acc_clear(acc_t *acc)$/;"	f
+acc_create	pbgp_accumulator.c	/^acc_create(acc_t *acc)$/;"	f
+acc_init	pbgp_accumulator.c	/^acc_init(acc_t **acc,pairing_t pairing)$/;"	f
+acc_load	pbgp_accumulator.c	/^acc_load(char *facc,acc_t *acc)$/;"	f
+acc_save	pbgp_accumulator.c	/^acc_save(char *facc,uint32_t nep,acc_t *acc)$/;"	f
+acc_t	pbgp.h	/^typedef struct accumulator_s acc_t;$/;"	t	typeref:struct:accumulator_s
+acc_update	pbgp_accumulator.c	/^acc_update(acc_t *acc,id_list_t *add,id_list_t *rvk,setup_params_t *setup)$/;"	f
+accumulator_s	pbgp.h	/^struct accumulator_s {$/;"	s
+act	pbgp.h	/^      id_list_t *act;$/;"	m	struct:ar_list_s
+action_data_s	pbgp.h	/^struct action_data_s$/;"	s
+action_data_t	pbgp.h	/^typedef struct action_data_s action_data_t;$/;"	t	typeref:struct:action_data_s
+ar_list_s	pbgp.h	/^struct ar_list_s$/;"	s
+ar_list_t	pbgp.h	/^typedef struct ar_list_s ar_list_t;$/;"	t	typeref:struct:ar_list_s
+as_rir	test.c	/^ibe_keypair_t *as_rir = NULL;$/;"	v
+asnum	pbgp.h	/^	uint32_t asnum;$/;"	m	struct:prefls_s
+asnum	pbgp.h	/^      	uint32_t asnum;$/;"	m	struct:ibeid_s
+aspathlen	test.c	/^int aspathlen = MAXASPATHLEN;$/;"	v
+build_msg_array	test.c	/^build_msg_array(uint8_t ** msga,uint8_t *smsg,time_t *tstamps,int prefixnum,setup_params_t *setup)$/;"	f
+bytestohex	pbgp_common.c	/^bytestohex(unsigned char *in, int len, char *out) {$/;"	f
+c	pbgp_code.vim	/^inoremap <buffer> <silent> c :exe "keepjumps lcd ".fnameescape(b:netrw_curdir)$/;"	m
+c	pbgp_code.vim	/^nnoremap <buffer> <silent> c :exe "keepjumps lcd ".fnameescape(b:netrw_curdir)$/;"	m
+claim_new_epoch	pbgp_epoch.c	/^claim_new_epoch(char *glb[2],char *epoch[2],char *facc,char *outf,setup_params_t *setup)$/;"	f
+create_aslist	test.c	/^create_aslist(ibe_keypair_t **ibk,setup_params_t *setup)$/;"	f
+die	test.c	/^die(const char *err, ...)$/;"	f
+do_join	pbgp_actions.c	/^do_join(action_data_t *join,setup_params_t *setup)$/;"	f
+do_revoke	pbgp_actions.c	/^do_revoke(action_data_t *rvk,ibeid_t *id)$/;"	f
+elem	pbgp.h	/^	element_t elem;$/;"	m	struct:accumulator_s
+epls	pbgp.h	/^      ar_list_t epls;$/;"	m	struct:epoch_item_s
+epoch	pbgp.h	/^      ar_list_t epoch;$/;"	m	struct:action_data_s
+epoch	pbgp.h	/^      uint32_t epoch;$/;"	m	struct:epoch_item_s
+epoch_item_s	pbgp.h	/^struct epoch_item_s {$/;"	s
+epoch_item_t	pbgp.h	/^typedef struct epoch_item_s epoch_item_t;$/;"	t	typeref:struct:epoch_item_s
+file_exists	pbgp_common.c	/^file_exists(const char * filename)$/;"	f
+g	pbgp.h	/^      element_t g;$/;"	m	struct:setup_params_s
+gamma	pbgp.h	/^      element_t gamma;$/;"	m	struct:setup_params_s
+gammapow_np1	pbgp.h	/^      element_t gammapow_np1;$/;"	m	struct:setup_params_s
+get_ibesignature_size	pbgp_ibe.c	/^get_ibesignature_size(setup_params_t *setup,uint16_t nsigners)$/;"	f
+get_id_couple	pbgp_ibe.c	/^get_id_couple(char *id0,char *id1,char *idstr)$/;"	f	file:
+get_time_diff	pbgp_common.c	/^get_time_diff(struct timeval startTime,struct timeval endTime)$/;"	f
+glb	pbgp.h	/^      ar_list_t glb;$/;"	m	struct:action_data_s
+gx	pbgp_code.vim	/^nmap gx <Plug>NetrwBrowseX$/;"	m
+head	pbgp.h	/^      ibeid_t *head;$/;"	m	struct:id_list_s
+hexsha1	pbgp_common.c	/^hexsha1(char *hexsha1, const uint8_t *message,size_t length)$/;"	f
+ibePub	pbgp.h	/^      element_t ibePub;$/;"	m	struct:setup_params_s
+ibe_keypair	pbgp.h	/^struct ibe_keypair {$/;"	s
+ibe_keypair_clear	pbgp_ibe.c	/^ibe_keypair_clear(ibe_keypair_t *keys)$/;"	f
+ibe_keypair_gen	pbgp_ibe.c	/^ibe_keypair_gen(ibe_keypair_t *keys)$/;"	f
+ibe_keypair_init	pbgp_ibe.c	/^ibe_keypair_init(ibe_keypair_t **k,setup_params_t *setup)$/;"	f
+ibe_keypair_load	pbgp_ibe.c	/^ibe_keypair_load(char *f,ibe_keypair_t *keys)$/;"	f
+ibe_keypair_loadfp	pbgp_ibe.c	/^ibe_keypair_loadfp(FILE *fp,ibe_keypair_t *keys)$/;"	f
+ibe_keypair_save	pbgp_ibe.c	/^ibe_keypair_save(char *f,ibe_keypair_t *keys)$/;"	f
+ibe_keypair_savefp	pbgp_ibe.c	/^ibe_keypair_savefp(FILE *fp,ibe_keypair_t *keys)$/;"	f
+ibe_keypair_t	pbgp.h	/^typedef struct ibe_keypair ibe_keypair_t;$/;"	t	typeref:struct:ibe_keypair
+ibe_multisign_sign	pbgp_ibe.c	/^ibe_multisign_sign(ibe_signature_t *sign,ibe_keypair_t *key,const uint8_t *m,const size_t nelem)$/;"	f
+ibe_multisign_vrfy	pbgp_ibe.c	/^ibe_multisign_vrfy(ibe_signature_t *sign,ibe_keypair_t *key,const uint8_t *m, const size_t nelem)$/;"	f
+ibe_sign	pbgp_ibe.c	/^ibe_sign(ibe_signature_t *sign,ibe_keypair_t *key,const uint8_t *m,const size_t nelem)$/;"	f
+ibe_sign_hess	pbgp_ibe.c	/^ibe_sign_hess(ibe_signature_t *sign,ibe_keypair_t *key,const uint8_t *m,const size_t nelem)$/;"	f
+ibe_signature	pbgp.h	/^struct ibe_signature {$/;"	s
+ibe_signature_clear	pbgp_ibe.c	/^ibe_signature_clear(ibe_signature_t *s)$/;"	f
+ibe_signature_clear_hess	pbgp_ibe.c	/^ibe_signature_clear_hess(ibe_signature_t *s)$/;"	f
+ibe_signature_deserialize	pbgp_ibe.c	/^ibe_signature_deserialize(ibe_signature_t *s,uint8_t *buf)$/;"	f
+ibe_signature_init	pbgp_ibe.c	/^ibe_signature_init(ibe_signature_t **s,setup_params_t *setup)$/;"	f
+ibe_signature_init_hess	pbgp_ibe.c	/^ibe_signature_init_hess(ibe_signature_t **s,setup_params_t *setup)$/;"	f
+ibe_signature_print	pbgp_ibe.c	/^ibe_signature_print(ibe_signature_t *s)$/;"	f
+ibe_signature_serialize	pbgp_ibe.c	/^ibe_signature_serialize(unsigned char **buf,ibe_signature_t *s)$/;"	f
+ibe_signature_t	pbgp.h	/^typedef struct ibe_signature ibe_signature_t;$/;"	t	typeref:struct:ibe_signature
+ibe_vrfy	pbgp_ibe.c	/^ibe_vrfy(ibe_signature_t *sign,setup_params_t *setup ,const uint8_t **m, const size_t *nelem)$/;"	f
+ibe_vrfy_hess	pbgp_ibe.c	/^ibe_vrfy_hess(ibe_signature_t *sign,ibe_keypair_t *key,const uint8_t *m, const size_t nelem)$/;"	f
+ibe_vrfy_single	pbgp_ibe.c	/^ibe_vrfy_single(ibe_signature_t *sign,setup_params_t *setup ,const uint8_t *m, const size_t nelem)$/;"	f
+ibeid_s	pbgp.h	/^struct ibeid_s$/;"	s
+ibeid_t	pbgp.h	/^typedef struct ibeid_s ibeid_t;$/;"	t	typeref:struct:ibeid_s
+ibk	pbgp.h	/^      ibe_keypair_t *ibk;$/;"	m	struct:action_data_s
+id	pbgp.h	/^     ibeid_t *id;$/;"	m	struct:ibe_keypair
+id_list_s	pbgp.h	/^struct id_list_s$/;"	s
+id_list_t	pbgp.h	/^typedef struct id_list_s id_list_t;$/;"	t	typeref:struct:id_list_s
+id_to_string	pbgp_common.c	/^id_to_string(char **s,const ibeid_t *id)$/;"	f
+id_to_string_clear	pbgp_common.c	/^void id_to_string_clear(char *s)$/;"	f
+idarray	pbgp_actions.c	/^static int *idarray;$/;"	v	file:
+idarray_clear	pbgp_actions.c	/^idarray_clear(void )$/;"	f	file:
+idarray_getnextid	pbgp_actions.c	/^idarray_getnextid(id_list_t *active,id_list_t *revoked,setup_params_t *setup)$/;"	f	file:
+idarray_init	pbgp_actions.c	/^idarray_init(id_list_t *active,id_list_t *revoked,setup_params_t *setup)$/;"	f
+ids_add	pbgp_common.c	/^ids_add(id_list_t *list,ibeid_t *id)$/;"	f
+ids_clear	pbgp_common.c	/^ids_clear(id_list_t *active,id_list_t *revoked)$/;"	f
+ids_dump	pbgp_common.c	/^ids_dump(id_list_t *active,id_list_t *revoked, char *idf,char *ridf)$/;"	f
+ids_find	pbgp_common.c	/^ids_find(id_list_t *list,ibeid_t *id) $/;"	f
+ids_init	pbgp_common.c	/^ids_init(id_list_t **active,id_list_t **revoked)$/;"	f
+ids_load	pbgp_common.c	/^ids_load(char *f,id_list_t *entities)$/;"	f
+ids_load_fp	pbgp_common.c	/^ids_load_fp(FILE *fp,id_list_t *entities)$/;"	f
+ids_remove	pbgp_common.c	/^ids_remove(id_list_t *list,ibeid_t *id)$/;"	f
+ids_save	pbgp_common.c	/^ids_save(char *f, id_list_t *entities)$/;"	f
+ids_save_fp	pbgp_common.c	/^ids_save_fp(FILE *fp, id_list_t *entities)$/;"	f
+ina	pbgp.h	/^	struct in_addr ina[MAX_PFIX_NUM];$/;"	m	struct:prefls_s	typeref:struct:prefls_s::in_addr
+init_rsa_array	test.c	/^init_rsa_array(struct rsa_public_key **pub,struct rsa_private_key **priv)$/;"	f
+init_rsa_sign	test.c	/^init_rsa_sign(mpz_t *v)$/;"	f
+join_action	pbgp_actions.c	/^join_action(char *glb[2],char *epoch[2],setup_params_t *setup, ibeid_t *id, prefls_t *pfixlist)$/;"	f	file:
+join_clear	pbgp_actions.c	/^join_clear(action_data_t *join)$/;"	f
+join_idsdump	pbgp_actions.c	/^join_idsdump(action_data_t *join,char *glb[2],char *epoch[2])$/;"	f
+join_init	pbgp_actions.c	/^join_init(action_data_t **join,setup_params_t *setup,prefls_t *pfixlist)$/;"	f
+join_load	pbgp_actions.c	/^join_load(char *in, action_data_t *join)$/;"	f
+join_save	pbgp_actions.c	/^join_save(action_data_t *join)$/;"	f
+ls	pbgp.h	/^      id_list_t *ls;$/;"	m	struct:ibe_signature
+main	pbgp_actions.c	/^main(int argc, char **argv)$/;"	f
+main	pbgp_epoch.c	/^main()$/;"	f
+main	pbgp_ibe.c	/^main()$/;"	f
+main	pbgp_setup.c	/^main (int argc, char **argv)$/;"	f
+main	test.c	/^main(int argc,char **argv)$/;"	f
+maxsize	pbgp.h	/^      uint32_t maxsize;$/;"	m	struct:id_list_s
+n	pbgp.h	/^      uint32_t n;$/;"	m	struct:setup_params_s
+nep	pbgp.h	/^	uint32_t nep; \/\/epoch number$/;"	m	struct:accumulator_s
+netmask	pbgp.h	/^    uint8_t netmask[MAX_PFIX_NUM];$/;"	m	struct:prefls_s
+newepoch_clear	pbgp_epoch.c	/^newepoch_clear(epoch_item_t *ep)$/;"	f
+newepoch_gen	pbgp_epoch.c	/^newepoch_gen(char *out,epoch_item_t *ep,setup_params_t *setup)$/;"	f
+newepoch_init	pbgp_epoch.c	/^newepoch_init(epoch_item_t **ep, setup_params_t *setup)$/;"	f
+newepoch_load	pbgp_epoch.c	/^newepoch_load(char *in,epoch_item_t *ep,setup_params_t * setup)$/;"	f
+newepoch_save	pbgp_epoch.c	/^newepoch_save(char *out,epoch_item_t *ep,setup_params_t * setup)$/;"	f
+out	pbgp_common.c	/^out (const char *format, ...)$/;"	f	file:
+out	test.c	/^out (const char *format, ...)$/;"	f	file:
+pairing	pbgp.h	/^      pairing_t pairing;$/;"	m	struct:setup_params_s
+params	pbgp.h	/^      pbc_param_t params;$/;"	m	struct:setup_params_s
+parse_prefix_list	pbgp_actions.c	/^parse_prefix_list(prefls_t **pfixlist,char *str,setup_params_t *setup)$/;"	f
+pbgp_die	pbgp_common.c	/^pbgp_die (const char *err, ...)$/;"	f
+pbgp_error	pbgp_common.c	/^pbgp_error (const char *err, ...)$/;"	f
+pbgp_info	pbgp_common.c	/^pbgp_info (const char *err, ...)$/;"	f
+pf_sign	pbgp.h	/^	ibe_signature_t *pf_sign[MAX_PFIX_NUM];$/;"	m	struct:prefls_s
+pfix_clear	pbgp_common.c	/^pfix_clear(prefls_t *ls)$/;"	f
+pfix_init	pbgp_common.c	/^pfix_init(prefls_t **ls,uint32_t size,setup_params_t *setup)$/;"	f
+pfixlist	pbgp.h	/^      prefls_t *pfixlist;$/;"	m	struct:action_data_s
+pfixlist	test.c	/^prefls_t *pfixlist = NULL;$/;"	v
+pfixnum	test.c	/^int pfixnum = MAXPFIXNUM;$/;"	v
+prefls_s	pbgp.h	/^struct prefls_s$/;"	s
+prefls_t	pbgp.h	/^typedef struct prefls_s prefls_t;$/;"	t	typeref:struct:prefls_s
+print_avg_time	pbgp_common.c	/^print_avg_time(struct timeval startTime,struct timeval endTime,int n)$/;"	f
+print_id	pbgp_common.c	/^print_id(ibeid_t *id)$/;"	f
+print_msg	test.c	/^print_msg(uint8_t *msg)$/;"	f
+print_time	pbgp_common.c	/^print_time(struct timeval startTime,struct timeval endTime)$/;"	f
+print_time_clock	pbgp_common.c	/^print_time_clock(clock_t start,clock_t end)$/;"	f
+print_usage	pbgp_actions.c	/^print_usage(void)$/;"	f	file:
+print_usage	pbgp_setup.c	/^print_usage(void)$/;"	f	file:
+priv0	pbgp.h	/^     element_t priv0; \/\/in G1$/;"	m	struct:ibe_keypair
+priv1	pbgp.h	/^     element_t priv1; \/\/in G1$/;"	m	struct:ibe_keypair
+priv_rsa	pbgp.h	/^      struct rsa_private_key priv_rsa;$/;"	m	struct:setup_params_s	typeref:struct:setup_params_s::rsa_private_key
+progress	test.c	/^progress(void *ctx, int c)$/;"	f	file:
+pub0	pbgp.h	/^     element_t pub0;  \/\/in G1$/;"	m	struct:ibe_keypair
+pub1	pbgp.h	/^     element_t pub1;  \/\/in G1$/;"	m	struct:ibe_keypair
+pub_rsa	pbgp.h	/^      struct rsa_public_key  pub_rsa;$/;"	m	struct:setup_params_s	typeref:struct:setup_params_s::rsa_public_key
+read_file	pbgp_common.c	/^read_file (const char *name, unsigned max_size, char **contents)$/;"	f	file:
+read_file	test.c	/^read_file(const char *name, unsigned max_size, char **contents)$/;"	f
+report	pbgp_common.c	/^report (const char *prefix, const char *err, va_list params)$/;"	f	file:
+report	test.c	/^report (const char *prefix, const char *err, va_list params)$/;"	f	file:
+revokation_check	pbgp_common.c	/^revokation_check(acc_t *acc,element_t wit,mpz_t sign_i, uint32_t id,setup_params_t *setup)$/;"	f
+revoke_action	pbgp_actions.c	/^revoke_action(char *glb[2],char *epoch[2],setup_params_t *setup,ibeid_t *id)$/;"	f	file:
+revoke_clear	pbgp_actions.c	/^revoke_clear(action_data_t *rvk)$/;"	f
+revoke_init	pbgp_actions.c	/^revoke_init(action_data_t **rvk,setup_params_t *setup)$/;"	f
+rsa_sign_msg	test.c	/^rsa_sign_msg(struct rsa_private_key *priv,mpz_t s, const uint8_t *msg, const size_t len)$/;"	f
+rsa_vrfy_msg	test.c	/^rsa_vrfy_msg(struct rsa_public_key *pub,mpz_t sign,const uint8_t *msg,const size_t len)$/;"	f
+rsaupvrfy	test.c	/^uint8_t rsaupvrfy[MAX_VRFY_LEN];$/;"	v
+rvk	pbgp.h	/^      id_list_t *rvk;$/;"	m	struct:ar_list_s
+s:cpo_save	pbgp_code.vim	/^let s:cpo_save=&cpo$/;"	v
+s:l	pbgp_code.vim	/^let s:l = 14 - ((0 * winheight(0) + 19) \/ 38)$/;"	v
+s:l	pbgp_code.vim	/^let s:l = 744 - ((20 * winheight(0) + 19) \/ 38)$/;"	v
+s:so_save	pbgp_code.vim	/^let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0$/;"	v
+s:sx	pbgp_code.vim	/^let s:sx = expand("<sfile>:p:r")."x.vim"$/;"	v
+s:wipebuf	pbgp_code.vim	/^  let s:wipebuf = bufnr('%')$/;"	v
+s_acc	pbgp.h	/^      mpz_t s_acc;$/;"	m	struct:epoch_item_s
+s_new	pbgp.h	/^      mpz_t s_new;$/;"	m	struct:epoch_item_s
+s_rvk	pbgp.h	/^      mpz_t s_rvk;$/;"	m	struct:epoch_item_s
+setup	pbgp.h	/^      setup_params_t *setup;$/;"	m	struct:epoch_item_s
+setup	pbgp.h	/^      setup_params_t *setup;$/;"	m	struct:ibe_signature
+setup	pbgp.h	/^     setup_params_t *setup;$/;"	m	struct:ibe_keypair
+setup	pbgp.h	/^    setup_params_t *setup;$/;"	m	struct:prefls_s
+setup_clear	pbgp_setup.c	/^setup_clear(setup_params_t *setup_s)$/;"	f
+setup_init	pbgp_setup.c	/^setup_init(setup_params_t **setup_s, int rbits, int qbits, uint32_t n)$/;"	f
+setup_load	pbgp_setup.c	/^setup_load (char *f_pub,char *f_priv,char *f_param,setup_params_t **setup_d)$/;"	f
+setup_load_ascii_param	pbgp_setup.c	/^setup_load_ascii_param(FILE *fp_param,setup_params_t *setup_d)$/;"	f	file:
+setup_load_privkey	pbgp_setup.c	/^setup_load_privkey(FILE *fp_priv,setup_params_t *setup_d)$/;"	f	file:
+setup_load_pubkey	pbgp_setup.c	/^setup_load_pubkey(FILE *fp_pub,setup_params_t *setup_d)$/;"	f	file:
+setup_params_s	pbgp.h	/^struct setup_params_s$/;"	s
+setup_params_t	pbgp.h	/^typedef struct setup_params_s setup_params_t;$/;"	t	typeref:struct:setup_params_s
+setup_print	pbgp_setup.c	/^setup_print(setup_params_t *setup)$/;"	f
+setup_random	pbgp_setup.c	/^setup_random (setup_params_t * setup_s)$/;"	f
+setup_save	pbgp_setup.c	/^setup_save (char *f_pub, char *f_priv,char *f_param ,setup_params_t * setup_d)$/;"	f
+setup_save_ascii_param	pbgp_setup.c	/^setup_save_ascii_param(FILE *fp_param,setup_params_t *setup_d)$/;"	f	file:
+setup_save_privkey	pbgp_setup.c	/^setup_save_privkey(FILE *fp_priv,setup_params_t * setup_d)$/;"	f	file:
+setup_save_pubkey	pbgp_setup.c	/^setup_save_pubkey(FILE *fp_pub,setup_params_t * setup_d)$/;"	f	file:
+sign_list_rsa	pbgp_common.c	/^sign_list_rsa(mpz_t signature,setup_params_t *setup,id_list_t *list)$/;"	f
+sign_rsa	pbgp_common.c	/^sign_rsa(mpz_t signature,setup_params_t *setup,uint8_t *msg)$/;"	f
+sign_rsa_len	pbgp_common.c	/^sign_rsa_len(mpz_t signature,setup_params_t *setup,uint8_t *msg,int length)$/;"	f
+signature	pbgp.h	/^      mpz_t signature; \/\/CA signature of the envelope TODO$/;"	m	struct:action_data_s
+simple_random	pbgp_common.c	/^simple_random (struct yarrow256_ctx *ctx, const char *name)$/;"	f
+size	pbgp.h	/^	uint32_t size;$/;"	m	struct:prefls_s
+size	pbgp.h	/^      uint32_t size;$/;"	m	struct:id_list_s
+test_simple_random	test.c	/^test_simple_random(struct yarrow256_ctx *ctx, const char *name)$/;"	f
+tsca	pbgp.h	/^	time_t tsca;$/;"	m	struct:prefls_s
+u	pbgp.h	/^      element_t u; $/;"	m	struct:ibe_signature
+upvrfy	test.c	/^uint8_t upvrfy[MAX_VRFY_LEN];$/;"	v
+v	pbgp.h	/^      element_t v; $/;"	m	struct:ibe_signature
+vrfy_list_rsa	pbgp_common.c	/^vrfy_list_rsa(mpz_t signature,setup_params_t *setup,id_list_t *list)$/;"	f
+vrfy_rsa	pbgp_common.c	/^vrfy_rsa(mpz_t signature,setup_params_t *setup,uint8_t *msg)$/;"	f
+vrfy_rsa_len	pbgp_common.c	/^vrfy_rsa_len(mpz_t signature,setup_params_t *setup,uint8_t *msg, int length)$/;"	f
+w	pbgp.h	/^      element_t w; \/\/common random element$/;"	m	struct:ibe_signature
+witness	pbgp.h	/^      element_t witness;$/;"	m	struct:action_data_s
+witness_clear	pbgp_witness.c	/^witness_clear(element_t witness)$/;"	f
+witness_create	pbgp_witness.c	/^witness_create(element_t witness,setup_params_t *setup,id_list_t *active,ibeid_t *newid)$/;"	f
+witness_deserialize	pbgp_witness.c	/^witness_deserialize(element_t witness,uint8_t *buf)$/;"	f
+witness_init	pbgp_witness.c	/^witness_init(element_t witness,pairing_t pairing)$/;"	f
+witness_serialize	pbgp_witness.c	/^witness_serialize(uint8_t **buf,element_t witness)$/;"	f
+witness_update	pbgp_witness.c	/^witness_update(element_t wit,ibeid_t *id,setup_params_t *setup,id_list_t *add,id_list_t *rvk)$/;"	f
+yarrow	pbgp.h	/^      struct yarrow256_ctx yarrow; \/\/random context, only for random init$/;"	m	struct:setup_params_s	typeref:struct:setup_params_s::yarrow256_ctx
+z	pbgp.h	/^      element_t z;$/;"	m	struct:setup_params_s
+zt	pbgp_code.vim	/^normal! zt$/;"	m

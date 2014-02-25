@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="84">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df name="ca_d" root=".">
+      <df name="autom4te.cache">
+      </df>
+      <df name="benchmarks">
+        <df name=".libs">
+          <in>main</in>
+          <in>speed</in>
+        </df>
+        <in>main.c</in>
+        <in>speed.c</in>
+      </df>
+      <df name="bin">
+      </df>
+      <df name="doc">
+        <df name="old_ca">
+          <in>microbench.c</in>
+          <in>pbgp.h</in>
+          <in>pbgp_accumulator.c</in>
+          <in>pbgp_actions.c</in>
+          <in>pbgp_common.c</in>
+          <in>pbgp_common.h</in>
+          <in>pbgp_epoch.c</in>
+          <in>pbgp_ibe.c</in>
+          <in>pbgp_setup.c</in>
+          <in>pbgp_witness.c</in>
+          <in>test_nettle.c</in>
+          <in>test_openssl.c</in>
+        </df>
+        <df name="snippets">
+          <in>check_db.c</in>
+          <in>hash.c</in>
+          <in>obsolete_main.c</in>
+          <in>openssl_rsa.c</in>
+          <in>rsa_key_gen.c</in>
+        </df>
+      </df>
+      <df name="includes">
+        <in>pbgp.h</in>
+        <in>pbgp_accumulator.h</in>
+        <in>pbgp_actions.h</in>
+        <in>pbgp_epoch.h</in>
+        <in>pbgp_ibe.h</in>
+        <in>pbgp_rsa.h</in>
+        <in>pbgp_schema.h</in>
+        <in>pbgp_setup.h</in>
+        <in>pbgp_store.h</in>
+        <in>pbgp_witness.h</in>
+      </df>
+      <df name="m4">
+      </df>
+      <df name="src">
+        <in>pbgp_accumulator.c</in>
+        <in>pbgp_actions.c</in>
+        <in>pbgp_epoch.c</in>
+        <in>pbgp_ibe.c</in>
+        <in>pbgp_rsa.c</in>
+        <in>pbgp_setup.c</in>
+        <in>pbgp_store.c</in>
+        <in>pbgp_witness.c</in>
+      </df>
+      <df name="tests">
+        <df name="bin">
+        </df>
+        <in>check_accwitt.c</in>
+        <in>check_epoch.c</in>
+        <in>check_ibe.c</in>
+        <in>check_main.c</in>
+        <in>check_pbgp.h</in>
+        <in>check_rsa.c</in>
+        <in>check_setup.c</in>
+        <in>check_store.c</in>
+        <in>check_void.c</in>
+      </df>
+      <in>config.h</in>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+      <itemPath>configure</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+      </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+          <cTool>
+            <incDir>
+              <pElem>.</pElem>
+              <pElem>includes</pElem>
+            </incDir>
+            <preprocessorList>
+              <Elem>HAVE_CONFIG_H</Elem>
+            </preprocessorList>
+          </cTool>
+        </makeTool>
+      </makefileType>
+      <item path="benchmarks/main.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+          <incDir>
+            <pElem>src</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="benchmarks/speed.c" ex="false" tool="0" flavor2="0">
+        <cTool>
+          <incDir>
+            <pElem>benchmarks</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="doc/old_ca/microbench.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="doc/old_ca/pbgp_accumulator.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="doc/old_ca/pbgp_actions.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="doc/old_ca/pbgp_common.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="doc/old_ca/pbgp_epoch.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="doc/old_ca/pbgp_ibe.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="doc/old_ca/pbgp_setup.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="doc/old_ca/pbgp_witness.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="doc/old_ca/test_nettle.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="doc/old_ca/test_openssl.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="doc/snippets/check_db.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="doc/snippets/hash.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="doc/snippets/obsolete_main.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="doc/snippets/openssl_rsa.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="doc/snippets/rsa_key_gen.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <folder path="ca_d/doc">
+        <cTool>
+          <incDir>
+            <pElem>src</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="ca_d/src">
+        <cTool>
+          <incDir>
+            <pElem>src</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>PIC</Elem>
+            <Elem>_GNU_SOURCE</Elem>
+          </preprocessorList>
+        </cTool>
+      </folder>
+      <folder path="ca_d/tests">
+        <cTool>
+          <incDir>
+            <pElem>src</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <item path="src/pbgp_accumulator.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="src/pbgp_actions.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="src/pbgp_epoch.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="src/pbgp_ibe.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="src/pbgp_rsa.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="src/pbgp_setup.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="src/pbgp_store.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="src/pbgp_witness.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="tests/check_accwitt.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="tests/check_epoch.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="tests/check_ibe.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="tests/check_main.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="tests/check_rsa.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="tests/check_setup.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="tests/check_store.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+      <item path="tests/check_void.c" ex="false" tool="0" flavor2="2">
+        <cTool>
+        </cTool>
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

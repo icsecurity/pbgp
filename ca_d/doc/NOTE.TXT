@@ -1,0 +1,235 @@
+
+- l'accumulatore serve a sapere se un ASNUM sta nella lista degli ASNUM attivi
+  (revokation_check)
+
+- witness e accumulatore si utilizzano per il check della presenza dell'asnum (id)
+  tra la lista degli as attivi (non revocati)
+
+- l'ibe firma invece la prefix list
+
+- epoch: per ogni nuova epoca aggiorno l'accumulatore (la CA)
+  a seconda degli id aggiunti o revocati e invio le info firmate ai client
+
+- la chiave id = 0 è la public key della CA
+
+- actions -> eseguite offline da CA
+
+- pbgp_setup -> accumulator_pkc
+
+- la chiave rsa è usata per firmare l'accumulatore (epoch)
+
+- CA rilascia accumulatore e witness e possiede secret key ibe
+
+- CA rilascia un nuovo accumulatore firmato per ogni epoc update
+
+- aggregate_signature_pkc
+
+- hess non è utilizzato
+
+-----------------
+
+Accumulatore
+
+è un numero associato a un epoch number (acc_s) -> viene calcolato
+  a seconda della lista degli AS revocati o presenti
+
+- accgen: crea keypair, accumulatore e stato0 (ha in input il numero n = max di valori
+  che possono essere contenuti nell'acc)
+- accadd(sk): la CA aggiunge i, da in output un nuovo accumulatore, witness e stato
+- accupdate(pk): output nuovo accumulatore per i valori dell'insieme V
+- accwitupdate(pk): output un nuovo testimone prendendo in input quello vecchio
+- accverify(pk): verifica che il valore appartenga all'acc
+
+la CA crea una chiave pubblica e una privata + l'accumulatore + uno stato (epoch ?)
+
+addacc produce un nuovo stato e un witness aggiungendo un valore i
+
+accupdate computa un accumulatore per un insieme di valori
+
+le info sullo stato sono necessarie unicamente per aggiornare il witness
+per aggiornare il witness servono le info sullo stato (corrente e iniziale)
+lo stato rappresenta l'insieme dei valori contenuti nell'accumulatore
+
+esiste uno stato iniziale, corrente e uno stato riferito alla creazione
+di ogni nuovo witness
+
+accverify è utilizzato dall'utente per verificare un witness aggiornato
+per un valore i -> possono provare a ogni verifier che i è contenuto nell'acc
+
+
+parametri di setup sono
+
+q, G, GT, e, g (pairing simmetrico GxG -> GT), g: generatore, q: ordine
+gamma <- Z(q)
+g(i) = g^gamma^i
+P = {insieme finito degli g(i)}
+keypair è rsa
+
+pk(a) = (params, pk(rsa), z = e(g,g)^(gamma^n+1))
+sk(a) = (params, sk(rsa), gamma)
+acc(0) = 1
+state(0) = (0, g^gamma, ... g^gamma^n ... ) {fino a n valori max}
+
+accadd: w = prodotto(g) + signature rsa di g(i)
+  wit = (w, sign, gi)
+  acc(i+1) = acc(i) * g(n+1-i)
+  sign(sk, i, gi)
+
+accupdate:
+  acc(v) = prodotto(g(v)) per ogni i appartenente a V contenuto in U
+
+accwitupdate(w, sign, gi):
+  eseguita da client ricevendo i nuovi insiemi di id revocati / contenuti
+  w = w * prodotto(g(v)) / prodotto(g(v))
+
+accvrfy:
+  eseguita da client per verificare appartenenza i -> acc
+  controlla sign(i) tramite pk __e__ z = e(gi, acc) / e(g, w)
+
+in pratica accumulo i valori g(i) -> elementi del gruppo e non i direttamente
+
+la firma rsa firma gli insieme degli id revocati o aggiunti __e__ l'accumulatore
+
+--------------
+
+ibe
+
+2 coppie di chiavi pk, sk
+
+le due chiavi j=0 e j=1 sono tenute private per ogni i = id = asnum
+(Pi_0, Pi_1)
+
+(j è solo una stringa casuale che vierne aggiunta all'idetntità = i = id = asnum)
+
+-----------------
+
+- ogni prefisso (1.1.1.1/24) ha associata una signature ibe che include un timestamp
+  associato al prefisso (durante join_init)
+
+- della struttura join (una per ogni AS joined) mi servono solo (da salvare):
+  witness, asnum (id), una signature (dell'envelope) e la lista dei prefissi associati all'as
+  con le loro signature ibe associate (NON MI SERVE IL KEYPAIR IBE ibk perchè per il vrfy mi basta l'id)
+
+------------------ ACTION JOIN  + IBE SIGN
+
+- ogni ibe_signature ha una lista di asnum=id che l'hanno firmata (ibe_sign)
+  ma nel nostro caso ogni prefisso appartiene a un solo as (tant'è che la lista sta dentro id-%)
+
+-> domanda: ma dove viene usata allora l'aggregazione della signature ?
+
+- per verificare necessito di tutti i messaggi segnati, della signature, della lista di tali firmatari
+  nel nostro caso (inizialmente in join_action) è un solo AS
+
+- quindi ho una lista asnum -> messaggio dove messaggio=serialized(prefix + netmask + timestamp)
+  da verificare tramite la ibe_signature
+
+*** quando chiamo ibe_sign(prefix) imposto nella signature del prefisso l'id dell'AS che lo sta firmando ***
+
+- in questo modo ogni prefisso è firmato da più AS (quelli che richiedono il join di quel prefisso)
+  e nella sua signature devo conservare questa info su quali AS l'hanno firmato ovvero
+  prefix + netmask -> asnum
+
+- in ogni caso (ibe_vrfy) il numero dei messaggi è uguale a quello dei firmatari quando verifico
+
+- come verifico ?
+  - per ogni prefisso+netmask e la sua signature
+    -> ciclo su tutti i prefissi (ovvero su tutti i serialized(data))
+    -> per ognuno verifico la signature corrispondente
+    -> per far questo devo cercare serialized(data) nella lista creata da ibe_sign
+      (non va bene !)
+
+- asnum | serialized(data)_i -------->  | asnum | prefix_i | signature(serialized(data))_i
+
+
+********************************************************************************
+
+
+[1] Cosa si intende esattamente per "firma envelope" e come (soprattutto, dove)
+    dovrebbe venire utilizzata ?
+
+  > Dovrebbe essere una normalissima firma RSA (o DSA se preferisci) dell'intero
+  > "pacchetto" rilasciato dal RIR. In realta' si tratta di uno step aggiuntivo
+  > che non e' strettamente legato all'implementazione; in sostanza prima di
+  > importare la coppia di chiavi che gli e' stata assegnata, un AS verifica
+  > la firme dell'envelope che gli e' stato rilasciato.
+
+[2]
+
+  > Ti ricordi della chiave "0" che viene assegnata al RIR di cui abbiamo discusso nell'altro insieme di domande?
+  > il prefisso che viene assegnato ad un AS deve essere firmato con questa chiave prima di essere rilasciato.
+  > In pratica il RIR diventa l'owner virtuale di tutti i prefissi.
+
+[3] Non ci sono esempi di come le procedure in action / epoch possano essere utilizzate
+      con firme aggregate (non ci sono esempi di firme aggregate in generale perché
+      la ibe_vrfy è chiamata sempre per un solo signer = AS)
+
+  A questo proposito mi sembra di capire che lo scopo è dare in input a ibe_vrfy():
+    - una signature aggregata (posso scartare le vecchie) computata da N signer
+      e associata a una lista del tipo [un signer -> un messaggio]
+    - tale lista signer(i) -> msg(i)
+
+  Se non sbaglio nel caso specifico il messaggio corrisponde a una versione serializzata di
+    (ipv4 + netmask bit + timestamp(i)) dove i è l'indice del signer=AS, ovvero esiste
+    un messaggio diverso per ogni signer=AS (non ci sono esempi)
+
+  Ora, al fine di far arrivare i dati in input a vrfy, pensavo di salvare una struttura dati
+    di questo genere:
+
+  - ogni signer=AS avrà un unico storage associato che contiene solamente
+      [asnum=id, witness aggiornato, firma envelope (? non molto chiaro, vedi punto 1 ?)]
+    salvato (eventualmente in join_save()) nel file id-<AS>.env
+
+  - uno storage uguale per tutti gli AS dove ogni record ha la seguente forma
+     (chiave -> valore):
+
+      p(j) + netmask(j) -> [ asnum(i) | serialize(p(j) + netmask(j) + timestamp(i)) ]
+      p(j) + netmask(j) -> [ asnum(i + 1) | serialize(p(j) + netmask(j) + timestamp(i + 1)) ]
+      p(j) + netmask(j) -> [ asnum(i + 2) | serialize(p(j) + netmask(j) + timestamp(i + 2)) ]
+
+      p(j + 1) + netmask(j + 1) -> [ asnum(i) -> serialize(p(j) + netmask(j) + timestamp(i)) ]
+      p(j + 1) + netmask(j + 1) -> [ asnum(i + 1) -> serialize(p(j) + netmask(j) + timestamp(i + 1)) ]
+      p(j + 1) + netmask(j + 1) -> [ asnum(i + 2) -> serialize(p(j) + netmask(j) + timestamp(i + 2)) ]
+
+      ...
+
+      { dove p = ipv4, netmask = netmask bits, asnum = Id(AS) }
+
+      (in pratica salvo la corrispondenza msg(i) -> signer(i) per ogni coppia prefisso/netmask)
+
+      tale storage contiene __inoltre__ tutte le signature aggregate per ogni coppia prefisso/netmask:
+
+      KEY[sign(p(j) + netmask(j))] -> signature(p(j) + netmask(j))
+      KEY[sign(p(j + 1) + netmask(j + 1))] -> signature(p(j + 1) + netmask(j + 1))
+
+      ...
+
+      (in pratica conservo solo l'ultima signature aggregata scartando tutte le vecchie)
+
+  In questo modo posso ricostruire per ogni prefisso/netmask la lista degli AS che lo hanno firmato:
+    asnum(k) -> msg(k) da passare a vrfy assieme alla signature(p(j + q) + netmask(j + q))
+
+  Quando devo invece aggiornare una signature per un prefisso ricavo la signature ibe:
+
+         signature(p(j) + netmask(j)) = KEY[sign(p(j) + netmask(j))]
+
+  e la riutilizzo in ibe_sign() sul msg=serialize(p(j) + netmask(j) + timestamp(i + k))
+  aggiungendo contestualmente nello storage la riga:
+
+        p(j) + netmask(j) -> [ asnum(i + k) | serialize(p(j) + netmask(j) + timestamp(i + k)) ]
+
+  Questo sarebbe un po' diverso da quello che avviene ora. Attualmente infatti la lista di AS
+  è incorporata nella signature e salvata per ogni coppia prefisso/signature per ogni AS
+  nel file id-<AS>.env. Questo rende più complesse due cose:
+
+    - ricostruire la lista signer(i) -> msg(i) da dare in input a vrfy()
+	(bisogna invertire la "matrice" msg(i) -> signers(i...n) per ogni prefisso)
+
+    - leggere e salvare la lista dei signer (degli AS) perchè è necessario conservare
+      le info sulla dimensione e allocarla dinamicamente
+
+  > la struttura dati con cui ti confronti (la envelope) e' quella usata dal RIR per
+  > assegnare gli IP ad un AS quindi ha un utilizzo diverso da quello descritto orora.
+  > deve contenere  { asnum + witness + RSA_SIGN(env) + ARRAY[ ipv4 + netmask + timestamp + signature ] }
+  > quindi facilmente ricostruibile dallo storage dei cidr escludendo tutti gli asnum != target
+
+

@@ -1,0 +1,24 @@
+[2011/11/27]
+- correzione meccanismo di firma in pbgp_actions.c: ora viene firmato anche il timestamp
+  della CA generato in fase di join
+  	
+[2011/07/17]
+- aggiunta funzione IBE per firma/verifica di messaggi diversi
+
+[2011/07/15]
+- correzione generazioni chiavi IBE: ora sono derivate solo dal numero di AS
+- implementazione del meccanismo dei timestamp per la gestione dei prefissi
+
+[2011/07/03]
+- prima versione del main di pbgp_setup
+- fix vari in pbgp_actions
+
+[2011/07/02]
+- Refactoring pbgp_ibe.c
+- Aggiunto main di test
+- Completato aggregatore IBE
+- Refactoring pbgp_epoch.c (con qualche bug fix)
+
+[2011/07/01]
+- Refactoring pbgp_actions.c
+- Aggiunto main definitivo in pgbp_actions.c
